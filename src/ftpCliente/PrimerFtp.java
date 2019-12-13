@@ -1,4 +1,4 @@
-package ftpCliente;
+package PrimerFtp;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -15,39 +15,36 @@ import javax.swing.JOptionPane;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
-public class ClienteFTP {
-	private static FTPClient cliente = new FTPClient();
-	private static String user = "user", pass = "";
-	private static String host;
-	private static String email;
-	private static FTPFile[] ficheros;
+public class PrimerFtp {
+	private FTPClient cliente = new FTPClient();
+	private String user = "user", pass = "";
+	private String host;
+	private String email;
+	private FTPFile[] ficheros;
 
-	public ClienteFTP(String host, String usuario, String pass, String email) {
+	public PrimerFtp(String host, String usuario, String pass, String email) {
 		this.host = host;
 		this.user = usuario;
 		this.pass = pass;
 		this.email = email;
 	}
 
-	public static void init() throws SocketException, IOException {
+	public void init() throws SocketException, IOException {
 		cliente.connect(host, 21);
 		cliente.login(user, pass);
 		ficheros = cliente.listFiles();
 		cliente.enterLocalPassiveMode();
 
-		if (subir("C:\\Users\\Miguel\\Desktop\\PDFS\\frutasyverduras.sql", "ejemplo.sql")) {
-			System.out.println("Archivo subido.");
-		} else {
-			System.out.println("ERROR AL SUBIR El archivo.");
-		}
-		reescribir("ejemplo.sql", "C:\\Users\\Miguel\\Downloads\\mascotas.sql");
-		crearCarpeta("carpetaPrueba");
-		borrarCarpeta("ejemplo.sql");
-		borrarCarpeta("carpetaPrueba");
-		crearFichero("StinkyPoops.txt");
+		/*
+		 * if (subir("C:\\Users\\Miguel\\Desktop\\PDFS\\frutasyverduras.sql",
+		 * "ejemplo.sql")) { System.out.println("Archivo subido."); } else {
+		 * System.out.println("ERROR AL SUBIR El archivo."); } reescribir("ejemplo.sql",
+		 * "C:\\Users\\Miguel\\Downloads\\mascotas.sql"); crearCarpeta("carpetaPrueba");
+		 * borrarCarpeta("ejemplo.sql"); borrarCarpeta("carpetaPrueba");
+		 */
 	}
 
-	private static boolean subir(String archivo, String nombre) {
+	public boolean subir(String archivo, String nombre) {
 		BufferedInputStream in;
 		boolean subido = false;
 		try {
@@ -63,7 +60,7 @@ public class ClienteFTP {
 		return subido;
 	}
 
-	private static void reescribir(String nombreFichero, String nuevoArchivo) {
+	public void reescribir(String nombreFichero, String nuevoArchivo) {
 		try {
 			for (FTPFile file : ficheros) {
 				if (file.getName().equals(nombreFichero) && file.isFile()) {
@@ -82,7 +79,7 @@ public class ClienteFTP {
 		}
 	}
 
-	private static void crearCarpeta(String nombreCarpeta) {
+	public void crearCarpeta(String nombreCarpeta) {
 		try {
 			if (cliente.makeDirectory(nombreCarpeta)) {
 				System.out.println("Carpeta creada");
@@ -94,20 +91,20 @@ public class ClienteFTP {
 		}
 	}
 
-	private static void borrarCarpeta(String nombreCarpeta) {
+	public void borrarCarpeta(String nombreCarpeta) {
 		try {
 			FTPFile f = cliente.mlistFile(nombreCarpeta);
 			if (f.isDirectory()) {
 				if (cliente.removeDirectory(nombreCarpeta)) {
 					System.out.println("Carpeta borrada.");
 				} else {
-					System.out.println("Carpeta inexistente.");
+					System.out.println("No se pudo borrar directorio.");
 				}
 			} else if (f.isFile()) {
 				if (cliente.deleteFile(nombreCarpeta)) {
-					System.out.println("fichero borrada.");
+					System.out.println("Fichero borrado.");
 				} else {
-					System.out.println("fichero inexistente.");
+					System.out.println("Fichero no existe.");
 				}
 			}
 		} catch (IOException e) {
@@ -116,26 +113,24 @@ public class ClienteFTP {
 		}
 	}
 
-	private static void renombrar(String nombreAntiguo, String nombreNuevo) {
+	public void renombrar(String nombreAntiguo, String nombreNuevo) {
 		try {
 			cliente.rename(nombreAntiguo, nombreNuevo);
 		} catch (IOException e) {
 			System.out.println("ERROR E/S");
 			e.printStackTrace();
 		}
-
 	}
-
-	public static void crearFichero(String fichero) {
+	
+	public void crearFichero(String fichero) {
 		File fi = new File(fichero);
-		System.out.println(fi.getAbsolutePath());
 		try {
 			fi.createNewFile();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		try (FileInputStream FicheroNuevo = new FileInputStream(fi);) {
+		try (FileInputStream FicheroNuevo = new FileInputStream(fi);){
 			cliente.storeFile(fichero, FicheroNuevo);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -146,57 +141,88 @@ public class ClienteFTP {
 		}
 		fi.delete();
 	}
-
-	public void descargar(String rutaCompleta, String nombre) {
+	
+	public void descargar(String rutaCompleta, String nombre, JFileChooser elegir) {
 		File fileDescargar;
 		String archivoDirDestino = "";
 		String dirDest = "";
-		JFileChooser elegir = new JFileChooser();
+		try {
+			cliente.setFileType(FTPClient.BINARY_FILE_TYPE);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		elegir.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		elegir.setDialogTitle("aaaaaaa");
 		int returnF = elegir.showDialog(null, "Descargar..");
 		if (returnF == JFileChooser.APPROVE_OPTION) {
 			fileDescargar = elegir.getSelectedFile();
 			dirDest = fileDescargar.getAbsolutePath();
 			archivoDirDestino = dirDest + File.separator + nombre;
+			System.out.println(archivoDirDestino);
 
 			try {
 				BufferedOutputStream salida = new BufferedOutputStream(new FileOutputStream(archivoDirDestino));
-				if (cliente.retrieveFile(rutaCompleta, salida))
-					JOptionPane.showMessageDialog(null, nombre + "=> Se ha descargado correctamente...");
-				else
-					JOptionPane.showMessageDialog(null, nombre + "=> No se ha podido descargar...");
 				salida.close();
+				if (cliente.retrieveFile(rutaCompleta, salida)) {
+					JOptionPane.showMessageDialog(null, nombre + "=> Se ha descargado correctamente...");
+				}
+					
+				else {
+					JOptionPane.showMessageDialog(null, nombre + "=> No se ha podido descargar...");
+				}
 
 			} catch (Exception e) {
 				System.out.println("ERROR");
 			}
 
 		}
-
 	}
 
-	public static FTPClient getCliente() {
+	public FTPClient getCliente() {
 		return cliente;
 	}
 
-	public static String getUser() {
+	public void setCliente(FTPClient cliente) {
+		this.cliente = cliente;
+	}
+
+	public String getUser() {
 		return user;
 	}
 
-	public static String getPass() {
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public String getPass() {
 		return pass;
 	}
 
-	public static String getHost() {
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+
+	public String getHost() {
 		return host;
 	}
 
-	public static String getEmail() {
+	public void setHost(String host) {
+		this.host = host;
+	}
+
+	public String getEmail() {
 		return email;
 	}
 
-	public static FTPFile[] getFicheros() {
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public FTPFile[] getFicheros() {
 		return ficheros;
+	}
+
+	public void setFicheros(FTPFile[] ficheros) {
+		this.ficheros = ficheros;
 	}
 }
