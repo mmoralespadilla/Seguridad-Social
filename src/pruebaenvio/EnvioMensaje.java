@@ -42,9 +42,9 @@ public class EnvioMensaje {
 			MimeMessage msg = new MimeMessage(session);
 			msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
 			msg.addHeader("format", "flowed");
-			msg.addHeader("Content-Transfer-Encoding", "8bit");
+			//msg.addHeader("Content-Transfer-Encoding", "8bit");
 
-			msg.setFrom(new InternetAddress(fromEmail, "NoReply-JD"));
+			msg.setFrom(new InternetAddress(fromEmail, "Seguridad Social"));
 
 			msg.setReplyTo(InternetAddress.parse(toEmail, false));
 
@@ -58,7 +58,7 @@ public class EnvioMensaje {
 			BodyPart messageBodyPart = new MimeBodyPart();
 
 			// Fill the message
-			messageBodyPart.setText(body);
+			messageBodyPart.setContent(body, "text/html");
 
 			// Create a multipart message for attachment
 			Multipart multipart = new MimeMultipart();
