@@ -1,4 +1,4 @@
-package PrimerFtp;
+package ftpCliente;
 
 public class modeloTextoInterfaz {
 	
@@ -15,7 +15,7 @@ public class modeloTextoInterfaz {
 	private String tituloCrearCarpeta = "Crear carpeta";
 	private String tituloEliminarCarpeta = "Eliminar carpeta";
 	private String tituloServidor = "Servidor";
-	private String tituloServidorInfor = "Información FTP";
+	private String tituloServidorInfor = "Informaciï¿½n FTP";
 	private String tituloServidorHistorial = "Historial de movimientos";
 	private String tituloAyuda = "Ayuda";
 	private String tituloAyudaSobre = "Sobre...";

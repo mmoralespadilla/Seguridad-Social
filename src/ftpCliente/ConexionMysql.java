@@ -1,4 +1,4 @@
-package PrimerFtp;
+package ftpCliente;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -31,7 +31,7 @@ public class ConexionMysql {
 		return cargada;
 	}
 
-	public static int comprobarLogin(String email, String contraseña) {
+	public static int comprobarLogin(String email, String contraseÃ±a) {
 		int tipoLogin = -3;
 		iniciarConexion();
 		String query = "select * from usuarios where email = '"+email+"'";
@@ -40,8 +40,8 @@ public class ConexionMysql {
 			ResultSet rs = st.executeQuery(query);
 			if(rs.next()) {
 				String emailBuscado = rs.getString(1);
-				String contraseñaBuscada = rs.getString(4);
-				if(contraseñaBuscada.equals(contraseña)) {
+				String contraseÃ±aBuscada = rs.getString(4);
+				if(contraseÃ±aBuscada.equals(contraseÃ±a)) {
 					tipoLogin = rs.getInt(2);
 				}else {
 					tipoLogin = -2;
@@ -60,7 +60,7 @@ public class ConexionMysql {
 	public static void cerrarConexion() {
 		try {
 			con.close();
-			System.out.println("Conexión sql cerrada");
+			System.out.println("Conexiï¿½n sql cerrada");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

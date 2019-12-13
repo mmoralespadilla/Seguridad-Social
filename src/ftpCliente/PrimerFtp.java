@@ -1,4 +1,4 @@
-package PrimerFtp;
+package ftpCliente;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

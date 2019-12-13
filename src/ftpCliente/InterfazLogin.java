@@ -1,4 +1,4 @@
-package PrimerFtp;
+package ftpCliente;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -29,7 +29,7 @@ public class InterfazLogin extends JDialog {
 	private BufferedImage image;
 	private JPanel contentPane;
 	private JTextField textFieldUsuario;
-	private JTextField textFieldContraseña;
+	private JTextField textFieldContraseÃ±a;
 	private JPanel panelLogin;
 	private JPanel panelImagen;
 	private String rutaImagen;
@@ -96,10 +96,10 @@ public class InterfazLogin extends JDialog {
 		lblContrasea.setFont(fuenteTitulo);
 		panelLogin.add(lblContrasea);
 
-		textFieldContraseña = new JTextField();
-		textFieldContraseña.setColumns(10);
-		textFieldContraseña.setBounds(134, 75, 231, 25);
-		panelLogin.add(textFieldContraseña);
+		textFieldContraseÃ±a = new JTextField();
+		textFieldContraseÃ±a.setColumns(10);
+		textFieldContraseÃ±a.setBounds(134, 75, 231, 25);
+		panelLogin.add(textFieldContraseÃ±a);
 
 		JButton btnLogin = new JButton(modeloTexto.getTituloLogin());
 		btnLogin.addActionListener(new ActionListener() {

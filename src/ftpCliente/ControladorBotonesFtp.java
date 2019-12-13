@@ -1,4 +1,4 @@
-package PrimerFtp;
+package ftpCliente;
 
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
@@ -31,7 +31,7 @@ public class ControladorBotonesFtp implements ActionListener {
 			cargar.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 			try {
 				if (ftp.subir(cargar.getSelectedFile().getAbsolutePath(), cargar.getSelectedFile().getName())) {
-					JOptionPane.showMessageDialog(null, "Archivo subido con éxito");
+					JOptionPane.showMessageDialog(null, "Archivo subido con ï¿½xito");
 				} else {
 					JOptionPane.showMessageDialog(null, "Error al subir el archivo");
 				}

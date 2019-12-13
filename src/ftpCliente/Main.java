@@ -1,4 +1,4 @@
-package PrimerFtp;
+package ftpCliente;
 
 public class Main {
 
@@ -18,7 +18,7 @@ public class Main {
 			break;
 			
 		case -2:
-			System.out.println("Contraseña incorrecta");
+			System.out.println("Contraseï¿½a incorrecta");
 			break;
 		case -3:
 			System.out.println("Error de base de datos");
