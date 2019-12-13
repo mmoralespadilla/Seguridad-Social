@@ -23,9 +23,129 @@ public class modeloTextoInterfaz {
 	private String tituloCorreoAbrir = "Abrir correo";
 	private String tituloRuta = "Ruta";
 	private String tituloCabeceraTabla = "Seleccione fichero o directorio: ";
+	private String tituloAcciones = "Acciones";
+	private String tituloAccionesRefrescar = "Refrescar";
+	private String tituloAccionesLeer = "Leer email";
+	private String tituloAccionesEliminar = "Eliminar email";
+	private String tituloAccionesCrear = "Crear email";
+	private String tituloEmailRecibido = "Emails recibidos";
+	private String tituloEmailEnviado = "Emails enviados";
+	private String cabeceraDe = "Remitente ";
+	private String cabeceraPara = "Destinatario ";
+	private String tituloBotonAdjuntar = "Adjuntar fichero";
+	private String tituloBotonEnviar = "Enviar";
+	private String cabeceraContenido = "Contenido";
+	
+		
+	public String getCabeceraContenido() {
+		return cabeceraContenido;
+	}
+
+	public void setCabeceraContenido(String cabeceraContenido) {
+		this.cabeceraContenido = cabeceraContenido;
+	}
+
+	public String getTituloBotonAdjuntar() {
+		return tituloBotonAdjuntar;
+	}
+
+	public void setTituloBotonAdjuntar(String tituloBotonAdjuntar) {
+		this.tituloBotonAdjuntar = tituloBotonAdjuntar;
+	}
+
+	public String getTituloBotonEnviar() {
+		return tituloBotonEnviar;
+	}
+
+	public void setTituloBotonEnviar(String tituloBotonEnviar) {
+		this.tituloBotonEnviar = tituloBotonEnviar;
+	}
+
+	public String getCabeceraDe() {
+		return cabeceraDe;
+	}
+
+	public void setCabeceraDe(String cabeceraDe) {
+		this.cabeceraDe = cabeceraDe;
+	}
+
+	public String getCabeceraPara() {
+		return cabeceraPara;
+	}
+
+	public void setCabeceraPara(String cabeceraPara) {
+		this.cabeceraPara = cabeceraPara;
+	}
+
+	public String getCabeceraAsunto() {
+		return cabeceraAsunto;
+	}
+
+	public void setCabeceraAsunto(String cabeceraAsunto) {
+		this.cabeceraAsunto = cabeceraAsunto;
+	}
+
+	private String cabeceraAsunto = "Asunto";
 	
 	
 	
+	
+
+	public String getTituloEmailRecibido() {
+		return tituloEmailRecibido;
+	}
+
+	public void setTituloEmailRecibido(String tituloEmailRecibido) {
+		this.tituloEmailRecibido = tituloEmailRecibido;
+	}
+
+	public String getTituloEmailEnviado() {
+		return tituloEmailEnviado;
+	}
+
+	public void setTituloEmailEnviado(String tituloEmailEnviado) {
+		this.tituloEmailEnviado = tituloEmailEnviado;
+	}
+
+	public String getTituloAccionesRefrescar() {
+		return tituloAccionesRefrescar;
+	}
+
+	public void setTituloAccionesRefrescar(String tituloAccionesRefrescar) {
+		this.tituloAccionesRefrescar = tituloAccionesRefrescar;
+	}
+
+	public String getTituloAccionesLeer() {
+		return tituloAccionesLeer;
+	}
+
+	public void setTituloAccionesLeer(String tituloAccionesLeer) {
+		this.tituloAccionesLeer = tituloAccionesLeer;
+	}
+
+	public String getTituloAccionesEliminar() {
+		return tituloAccionesEliminar;
+	}
+
+	public void setTituloAccionesEliminar(String tituloAccionesEliminar) {
+		this.tituloAccionesEliminar = tituloAccionesEliminar;
+	}
+
+	public String getTituloAccionesCrear() {
+		return tituloAccionesCrear;
+	}
+
+	public void setTituloAccionesCrear(String tituloAccionesCrear) {
+		this.tituloAccionesCrear = tituloAccionesCrear;
+	}
+
+	public String getTituloAcciones() {
+		return tituloAcciones;
+	}
+
+	public void setTituloAcciones(String tituloAcciones) {
+		this.tituloAcciones = tituloAcciones;
+	}
 
 	public String getTituloCabeceraTabla() {
 		return tituloCabeceraTabla;

@@ -6,8 +6,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/Miguel/Desktop/commons-net-3.6/commons-net-3.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Miguel/Downloads/javamail-1.4.7/mail.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Miguel/Downloads/jaf-1.1.1/activation.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Inma C/Desktop/FP MULTIP/TRABAJO COLABORATIVO/commons-net-3.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Inma C/Desktop/FP MULTIP/TRABAJO COLABORATIVO/javamail-1.4.7-20191212T094939Z-001/javamail-1.4.7/mail.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Inma C/Desktop/FP MULTIP/TRABAJO COLABORATIVO/jaf-1.1.1/activation.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

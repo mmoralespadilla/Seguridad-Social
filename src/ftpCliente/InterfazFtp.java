@@ -38,13 +38,20 @@ public class InterfazFtp extends JFrame {
 	private static PrimerFtp ftp;
 	private static modeloTextoInterfaz modeloTexto;
 	private ControladorBotonesFtp controlBotones;
+	private ControladorBotonesCorreo controlBotonesCorreo;
 
+	public InterfazFtp() {
+		
+	}
+	
+	
 	/**
 	 * Create the frame.
 	 */
 	public InterfazFtp(PrimerFtp ftp) {
 		this.ftp = ftp;
 		controlBotones = new ControladorBotonesFtp(ftp);
+		controlBotonesCorreo = new ControladorBotonesCorreo();
 		
 		modeloTexto = new modeloTextoInterfaz();
 		ArrayList <String> titulosMenuItemArchivo;
@@ -72,8 +79,7 @@ public class InterfazFtp extends JFrame {
 		//File menu
 		JMenu mnArchivo = crearMenu (modeloTexto.getTituloArchivo(), menuBar);				
 		titulosMenuItemArchivo = llenarListaTituloArchivo();
-		crearItems(titulosMenuItemArchivo, mnArchivo);		
-					
+		crearItems(titulosMenuItemArchivo, mnArchivo);						
 		
 		//Transfer menu
 		JMenu mnTransferencia = crearMenu (modeloTexto.getTituloTransferencia(), menuBar);				
@@ -107,7 +113,7 @@ public class InterfazFtp extends JFrame {
 		contentPane.setBackground(new java.awt.Color(218, 230, 228));
 		
 		//Buttons			
-		crearBotones (titulosMenuItemTransferencia, 60);
+		crearBotones (titulosMenuItemTransferencia, 60, contentPane,1);
 		
 		
 		JLabel lblRuta = new JLabel(modeloTexto.getTituloRuta());
@@ -136,8 +142,7 @@ public class InterfazFtp extends JFrame {
 		table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		
 		// Cabeceras de la tabla
-		dtm.addColumn(modeloTexto.getTituloCabeceraTabla());
-		
+		dtm.addColumn(modeloTexto.getTituloCabeceraTabla());	
 		
 		table.setSelectionMode(0);
 		
@@ -152,31 +157,37 @@ public class InterfazFtp extends JFrame {
 		scrollPane.getViewport().setBackground(Color.WHITE);
 		scrollPane.setViewportView(table);	
 		recargarTabla();
+		
 
 	}
 	
 	
-	private void crearBotones(ArrayList <String> titulos, int y) {	
+	public void crearBotones(ArrayList <String> titulos, int y, JPanel panel, int tipoControl) {	
 		for (int i = 0 ; i<titulos.size(); i++) {			
 			JButton boton = new JButton(titulos.get(i));
 			
-			boton.addActionListener(controlBotones );
+			//REVISAR Q FUNCIONAN BIEN BOTONES
+			if(tipoControl ==2) {
+				boton.addActionListener(controlBotonesCorreo);
+			}else {
+				boton.addActionListener(controlBotones);
+			}			
 			boton.setBounds(615, y, 160, 40);
 			y += 65;
 			ponerPropiedadesBoton(boton);
-			contentPane.add(boton);	
+			panel.add(boton);	
 		}	
 			
 	}
 	
-	private JMenu crearMenu(String textoMenu, JMenuBar barraMenu) {
+	public JMenu crearMenu(String textoMenu, JMenuBar barraMenu) {
 		JMenu menu = new JMenu(textoMenu);
 		ponerPropiedadesMenu(menu);
 		barraMenu.add(menu);
 		return menu;
 	}
 	
-	private void crearItems(ArrayList <String> titulos, JMenu menu ) {
+	public void crearItems(ArrayList <String> titulos, JMenu menu ) {
 		for (int i = 0 ; i<titulos.size(); i++) {
 			JMenuItem mntmTransfer = new JMenuItem(titulos.get(i));
 			mntmTransfer.addActionListener(controlBotones);

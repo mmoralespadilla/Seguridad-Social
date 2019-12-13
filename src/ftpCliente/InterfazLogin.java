@@ -29,7 +29,7 @@ public class InterfazLogin extends JDialog {
 	private BufferedImage image;
 	private JPanel contentPane;
 	private JTextField textFieldUsuario;
-	private JTextField textFieldContraseÃ±a;
+	private JTextField textFieldContraseña;
 	private JPanel panelLogin;
 	private JPanel panelImagen;
 	private String rutaImagen;
@@ -96,10 +96,10 @@ public class InterfazLogin extends JDialog {
 		lblContrasea.setFont(fuenteTitulo);
 		panelLogin.add(lblContrasea);
 
-		textFieldContraseÃ±a = new JTextField();
-		textFieldContraseÃ±a.setColumns(10);
-		textFieldContraseÃ±a.setBounds(134, 75, 231, 25);
-		panelLogin.add(textFieldContraseÃ±a);
+		textFieldContraseña = new JTextField();
+		textFieldContraseña.setColumns(10);
+		textFieldContraseña.setBounds(134, 75, 231, 25);
+		panelLogin.add(textFieldContraseña);
 
 		JButton btnLogin = new JButton(modeloTexto.getTituloLogin());
 		btnLogin.addActionListener(new ActionListener() {
