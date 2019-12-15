@@ -110,11 +110,10 @@ public class InterfazEscribirEmail extends JFrame {
 		textFieldPara.setBounds(140, 20, 470, 30);
 		contentPane.add(textFieldPara);
 		
-		
-		
+				
 		//About area
 		creacion.crearBotones(modeloTexto.getTituloBotonEnviar(),615, 55, contentPane);
-		JLabel lblAsunto = new JLabel(modeloTexto.getCabeceraContenido());
+		JLabel lblAsunto = new JLabel(modeloTexto.getCabeceraAsunto());
 		lblAsunto.setBounds(50, 55, 150, 30);
 		lblAsunto.setFont(fuenteTitulo);
 		contentPane.add(lblAsunto);		
