@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.SocketException;
+import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -21,12 +22,15 @@ public class PrimerFtp {
 	private String host;
 	private String email;
 	private FTPFile[] ficheros;
-
+	private ArrayList<String> rutas;
+	
 	public PrimerFtp(String host, String usuario, String pass, String email) {
 		this.host = host;
 		this.user = usuario;
 		this.pass = pass;
 		this.email = email;
+		rutas = new ArrayList<String>();
+		rutas.add("/");
 	}
 
 	public void init() throws SocketException, IOException {
@@ -224,5 +228,13 @@ public class PrimerFtp {
 
 	public void setFicheros(FTPFile[] ficheros) {
 		this.ficheros = ficheros;
+	}
+
+	public ArrayList<String> getRutas() {
+		return rutas;
+	}
+
+	public void setRutas(ArrayList<String> rutas) {
+		this.rutas = rutas;
 	}
 }

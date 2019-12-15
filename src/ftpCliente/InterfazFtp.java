@@ -6,6 +6,8 @@ import java.awt.ComponentOrientation;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.ClientInfoStatus;
 import java.util.ArrayList;
@@ -33,6 +35,7 @@ import javax.swing.JButton;
 public class InterfazFtp extends JFrame {
 
 	private JPanel contentPane;
+	protected int posicionRuta = 0;
 	public static DefaultTableModel dtm;
 	public static JTable table;
 	private static PrimerFtp ftp;
@@ -131,6 +134,33 @@ public class InterfazFtp extends JFrame {
 				return false;
 			}
 		};
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				String ruta;
+				if(e.getClickCount() == 2) {
+					ruta = (String)InterfazFtp.dtm.getValueAt(InterfazFtp.table.getSelectedRow(), 0);
+					if(!ruta.contains(".")) {
+						try {
+							ruta = ftp.getRutas().get(posicionRuta )+"/"+ ruta;
+							posicionRuta ++;
+							ftp.getRutas().add(ruta);
+							for(int i = 0; i < ftp.getRutas().size(); i++) {
+								System.out.println(ftp.getRutas().get(i));
+							}
+							System.out.println(ftp.getCliente().printWorkingDirectory());
+							ftp.getCliente().changeWorkingDirectory(ftp.getRutas().get(posicionRuta));
+							System.out.println(ftp.getCliente().printWorkingDirectory());
+							
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						recargarTabla();
+					}
+				}
+			}
+		});
 		table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		
 		// Cabeceras de la tabla
