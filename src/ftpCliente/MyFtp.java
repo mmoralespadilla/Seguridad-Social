@@ -24,7 +24,6 @@ public class MyFtp {
 		path = "D:\\"+nombreFichero;
 		System.out.println(cliente.printWorkingDirectory());
 		if (!user.contains("admin")) {
-
 			subir(path, "prueba.txt");
 		}
 		System.out.println(path);
@@ -46,18 +45,15 @@ public class MyFtp {
 		} catch (IOException e) {
 			System.out.println("Error de fichero");
 		}finally {
-		
 		}
 		return t;
 	}
 
 	private static void listadoArchivos(String nombre) throws IOException {
-
 		FTPFile[] path = cliente.listFiles();
 		System.out.println(path.length);
 		for (int i = 0; i < path.length; i++) {
 			System.out.println(path[i].getName());
 		}
-
 	}
 }

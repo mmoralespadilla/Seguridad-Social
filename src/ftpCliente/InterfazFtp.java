@@ -31,6 +31,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JButton;
+import java.awt.event.ActionEvent;
 
 public class InterfazFtp extends JFrame {
 
@@ -182,6 +183,33 @@ public class InterfazFtp extends JFrame {
 		
 		scrollPane.getViewport().setBackground(Color.WHITE);
 		scrollPane.setViewportView(table);	
+		
+		
+		
+		
+		JButton btnAtras = new JButton("<- Atras");
+		btnAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String ruta = "";
+				if(posicionRuta >= 1) {
+					posicionRuta --;
+					try {
+						ftp.getCliente().changeWorkingDirectory(ftp.getRutas().get(posicionRuta));
+						ruta = ftp.getCliente().printWorkingDirectory();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					lblRuta.setText("Ruta: " + ruta);
+					recargarTabla();
+				}
+			}
+		});
+		
+		
+		
+		btnAtras.setBounds(60, 438, 97, 25);
+		contentPane.add(btnAtras);
 		recargarTabla();	
 	}
 		
@@ -252,5 +280,4 @@ public class InterfazFtp extends JFrame {
 			dtm.addRow(row);
 		}
 	}
-	
 }

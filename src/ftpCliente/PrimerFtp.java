@@ -167,18 +167,15 @@ public class PrimerFtp {
 			try {
 				BufferedOutputStream salida = new BufferedOutputStream(new FileOutputStream(archivoDirDestino));
 				salida.close();
-				if (cliente.retrieveFile(rutaCompleta, salida)) {
+				if (cliente.retrieveFile(nombre, salida)) {
 					JOptionPane.showMessageDialog(null, nombre + "=> Se ha descargado correctamente...");
 				}
-					
 				else {
 					JOptionPane.showMessageDialog(null, nombre + "=> No se ha podido descargar...");
 				}
-
 			} catch (Exception e) {
 				System.out.println("ERROR");
 			}
-
 		}
 	}
 
