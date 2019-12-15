@@ -19,15 +19,16 @@ public class Main {
 		final String toEmail = "iamsegsoctrustme@gmail.com"; // can be any email id 
 		final String fromEmail = "iamsegsoctrustme@gmail.com"; //requires valid gmail id
 		final String pass = "segsoc123"; // correct password for gmail id
-		String header = "Soy er kbsero";
-		String body = "<H1>Soy tu cuerpesito papuh</H1>";
+		String header = "Ojalá ste sea el weno";
+		String body = "<H1>Vamooo</H1><img src=\"cid:image\">";
+		String pathEmbeddedImage = System.getProperty("user.home") + "/Desktop/este no es bill gates.png";
 		ArrayList<String> paths = new ArrayList<>();
 		paths.add(System.getProperty("user.home") + "/Desktop/AndroidManifest.xml");
 		paths.add(System.getProperty("user.home") + "/Desktop/gato felis.jpg");
 		
 		ConexionCorreo connectMail = new ConexionCorreo(fromEmail, pass);
 		Session sesion = connectMail.conectar();
-		EnvioMensaje sentMsg = new EnvioMensaje(sesion, toEmail, fromEmail, header, body, paths);
+		EnvioMensaje sentMsg = new EnvioMensaje(sesion, toEmail, fromEmail, header, body, pathEmbeddedImage, paths);
 		sentMsg.enviarMensaje();
 		
 	        //EmailUtil.sendEmail(session, toEmail,"SSLEmail Testing Subject", "SSLEmail Testing Body");

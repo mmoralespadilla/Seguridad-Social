@@ -22,7 +22,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
 
 public class Main {
 	private static JEditorPane editor = new JEditorPane();
@@ -38,12 +37,11 @@ public class Main {
 		ListadoMensajes listmessages = new ListadoMensajes(folder);
 		listmessages.listarMensajes();
 		JEditorPane panelMensaje = new JEditorPane();
-		JTextPane panelTexto = new JTextPane();
-		MuestraMensaje verMensaje = new MuestraMensaje(folder, 8/*Mete por parámetro la posición del mensaje que quieres abrir (empieza en el 1)*/);
-		verMensaje.mostrarMensaje(panelMensaje, panelTexto);
-		//panelMensaje.setText(verMensaje.mostrarMensaje().toString());
-		
-		JScrollPane scrollPane = new JScrollPane(panelTexto);
+		panelMensaje.setContentType("text/html");
+		MuestraMensaje verMensaje = new MuestraMensaje(folder, 33/*Mete por parámetro la posición del mensaje que quieres abrir (empieza en el 1)*/);
+		panelMensaje.setText(verMensaje.mostrarMensaje().toString());
+		panelMensaje.setEditable(false);
+		JScrollPane scrollPane = new JScrollPane(panelMensaje);
 		ventana.add(scrollPane);
 		ventana.pack();
 
@@ -51,11 +49,3 @@ public class Main {
 		ventana.setVisible(true);
 	}
 }
-
-//Preguntar a Enrique:
-/*
- * Las recuperaciones de PSP y ACDA son los 2 el miércoles de llegar de vavaciones, ¿no?
- * En caso afirmativo, ¿daría tiempo a ambos?
- * Con las recuperaciones se recuperaba tanto los trabajos como la prueba de aptitud, ¿no?
- * En la recu de ADCA no entran las BD de objetos , ¿no?
- */

@@ -1,5 +1,6 @@
 package pruebaenvio;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,15 +26,17 @@ public class EnvioMensaje {
 	String toEmail;
 	String header;
 	String body;
+	String pathEmbeddedImage;
 	ArrayList<String> paths = new ArrayList<>();
 
 	public EnvioMensaje(Session session, String fromEmail, String toEmail, String header, String body,
-			ArrayList<String> paths) {
+			String pathEmbeddedImage, ArrayList<String> paths) {
 		this.session = session;
 		this.fromEmail = fromEmail;
 		this.toEmail = toEmail;
 		this.header = header;
 		this.body = body;
+		this.pathEmbeddedImage = pathEmbeddedImage;
 		this.paths = paths;
 	}
 
@@ -42,7 +45,6 @@ public class EnvioMensaje {
 			MimeMessage msg = new MimeMessage(session);
 			msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
 			msg.addHeader("format", "flowed");
-			//msg.addHeader("Content-Transfer-Encoding", "8bit");
 
 			msg.setFrom(new InternetAddress(fromEmail, "Seguridad Social"));
 
@@ -61,18 +63,26 @@ public class EnvioMensaje {
 			messageBodyPart.setContent(body, "text/html");
 
 			// Create a multipart message for attachment
-			Multipart multipart = new MimeMultipart();
+			Multipart multipart = new MimeMultipart("related");
 
 			// Set text message part
 			multipart.addBodyPart(messageBodyPart);
 
-			// Second part is attachment
+			if (!pathEmbeddedImage.isEmpty()) {
+				messageBodyPart = new MimeBodyPart();
+				DataSource fds = new FileDataSource(pathEmbeddedImage);
+				messageBodyPart.setDataHandler(new DataHandler(fds));
+				messageBodyPart.setHeader("Content-ID", "<image>");
+				messageBodyPart.setFileName("SegSoc.png");
+				multipart.addBodyPart(messageBodyPart);
+			}
 
 			for (String path : paths) {
+				File file = new File(path);
 				messageBodyPart = new MimeBodyPart();
 				DataSource source = new FileDataSource(path);
 				messageBodyPart.setDataHandler(new DataHandler(source));
-				messageBodyPart.setFileName(path);
+				messageBodyPart.setFileName(file.getName());
 				multipart.addBodyPart(messageBodyPart);
 			}
 
