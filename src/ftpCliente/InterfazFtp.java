@@ -55,7 +55,6 @@ public class InterfazFtp extends JFrame {
 		ArrayList <String> titulosMenuItemAyuda;
 		ArrayList <String> titulosMenuItemCorreo;
 		ArrayList <String> titulosBotones;
-		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 855, 547);
@@ -112,12 +111,12 @@ public class InterfazFtp extends JFrame {
 		
 		
 		JLabel lblRuta = new JLabel(modeloTexto.getTituloRuta());
-		lblRuta.setBounds(50, 30, 75, 16);
+		lblRuta.setBounds(50, 30, 515, 16);
 		lblRuta.setFont(fuenteTitulo);
 		contentPane.add(lblRuta);
 		
 		JLabel lblUsuario= new JLabel(modeloTexto.getTituloUsuario());
-		lblUsuario.setBounds(615, 30, 165, 16);
+		lblUsuario.setBounds(615, 30, 205, 16);
 		lblUsuario.setFont(fuenteTitulo);
 		contentPane.add(lblUsuario);
 		
@@ -138,20 +137,25 @@ public class InterfazFtp extends JFrame {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				String ruta;
+				String workSpaceActual = "";
+				try {
+					workSpaceActual = ftp.getCliente().printWorkingDirectory();
+				} catch (IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
 				if(e.getClickCount() == 2) {
 					ruta = (String)InterfazFtp.dtm.getValueAt(InterfazFtp.table.getSelectedRow(), 0);
 					if(!ruta.contains(".")) {
 						try {
 							ruta = ftp.getRutas().get(posicionRuta )+"/"+ ruta;
-							posicionRuta ++;
-							ftp.getRutas().add(ruta);
-							for(int i = 0; i < ftp.getRutas().size(); i++) {
-								System.out.println(ftp.getRutas().get(i));
+							ftp.getCliente().changeWorkingDirectory(ruta);
+							if(!workSpaceActual.equals(ftp.getCliente().printWorkingDirectory())) {
+								ftp.getRutas().add(ruta);
+								posicionRuta ++;
+								lblRuta.setText("Ruta: " + ruta);
+								
 							}
-							System.out.println(ftp.getCliente().printWorkingDirectory());
-							ftp.getCliente().changeWorkingDirectory(ftp.getRutas().get(posicionRuta));
-							System.out.println(ftp.getCliente().printWorkingDirectory());
-							
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();

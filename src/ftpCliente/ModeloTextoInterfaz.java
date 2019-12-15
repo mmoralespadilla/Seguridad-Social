@@ -21,7 +21,7 @@ public class ModeloTextoInterfaz {
 	private String tituloAyudaSobre = "Sobre...";
 	private String tituloCorreo = "Correo";
 	private String tituloCorreoAbrir = "Abrir correo";
-	private String tituloRuta = "Ruta";
+	private String tituloRuta = "Ruta: /";
 	private String tituloCabeceraTabla = "Seleccione fichero o directorio: ";
 	private String tituloAcciones = "Acciones";
 	private String tituloAccionesRefrescar = "Refrescar";
