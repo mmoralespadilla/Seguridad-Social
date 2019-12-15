@@ -33,13 +33,13 @@ public class InterfazLogin extends JDialog {
 	private JPanel panelLogin;
 	private JPanel panelImagen;
 	private String rutaImagen;
-	private static modeloTextoInterfaz modeloTexto;
+	private static ModeloTextoInterfaz modeloTexto;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		modeloTexto = new modeloTextoInterfaz();
+		modeloTexto = new ModeloTextoInterfaz();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -133,6 +133,8 @@ public class InterfazLogin extends JDialog {
 		btnLogin.setBorder(compound);
 		panelLogin.add(btnLogin);
 
+		
+		//?????????
 		/*rutaImagen = "C:\\Users\\Inma C\\Desktop\\FP MULTIP\\TRABAJO COLABORATIVO\\Interfaz\\logo.png";
 		image = ImageIO.read(new File(rutaImagen));
 		JLabel Imagen = new JLabel(new ImageIcon(image));

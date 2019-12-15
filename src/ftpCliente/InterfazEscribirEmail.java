@@ -24,6 +24,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 
 public class InterfazEscribirEmail extends JFrame {
@@ -32,15 +33,17 @@ public class InterfazEscribirEmail extends JFrame {
 	private DefaultTableModel dtm;
 	private JTable table;
 	private JTextField textFieldPara;
-	private static modeloTextoInterfaz modeloTexto;
-	private static InterfazFtp creacion;
-	private static ControladorBotonesCorreo controlBotonesCorreo;
+	private static ModeloTextoInterfaz modeloTexto;
+	private static CreadorInterfaz creacion;
+	private JComboBox listaAdjuntos;
+	private JComboBox listaContactos;
+
+	
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		controlBotonesCorreo = new ControladorBotonesCorreo();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -57,8 +60,8 @@ public class InterfazEscribirEmail extends JFrame {
 	 * Create the frame.
 	 */
 	public InterfazEscribirEmail() {
-		modeloTexto = new modeloTextoInterfaz();
-		creacion = new InterfazFtp();
+		modeloTexto = new ModeloTextoInterfaz();
+		creacion = new CreadorInterfaz();
 
 		ArrayList<String> titulosMenuItemAcciones;
 		ArrayList<String> titulosMenuItemAyuda;
@@ -95,22 +98,43 @@ public class InterfazEscribirEmail extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		crearBotones(modeloTexto.getTituloBotonEnviar(),615, 30, contentPane);
-
+		//From area
+		listaContactos = new JComboBox();
+		listaContactos.setBounds(615, 20, 160, 30);
+		contentPane.add(listaContactos);
 		JLabel lblDestinatario = new JLabel(modeloTexto.getCabeceraPara());
-		lblDestinatario.setBounds(50, 30, 150, 30);
+		lblDestinatario.setBounds(50, 20, 150, 30);
 		lblDestinatario.setFont(fuenteTitulo);
-		contentPane.add(lblDestinatario);
-		
+		contentPane.add(lblDestinatario);		
 		textFieldPara = new JTextField();
-		textFieldPara.setBounds(140, 30, 470, 30);
+		textFieldPara.setBounds(140, 20, 470, 30);
 		contentPane.add(textFieldPara);
 		
 		
-		crearBotones(modeloTexto.getTituloBotonAdjuntar(), 50, 410, contentPane);
+		
+		//About area
+		creacion.crearBotones(modeloTexto.getTituloBotonEnviar(),615, 55, contentPane);
+		JLabel lblAsunto = new JLabel(modeloTexto.getCabeceraContenido());
+		lblAsunto.setBounds(50, 55, 150, 30);
+		lblAsunto.setFont(fuenteTitulo);
+		contentPane.add(lblAsunto);		
+		textFieldPara = new JTextField();
+		textFieldPara.setBounds(140, 55, 470, 30);
+		contentPane.add(textFieldPara);
+		
+				
+		
+		//Files area
+		creacion.crearBotones(modeloTexto.getTituloBotonAdjuntar(), 50, 410, contentPane);
+		listaAdjuntos = new JComboBox();
+		listaAdjuntos.setBounds(250, 410, 330, 30);
+		contentPane.add(listaAdjuntos);
+		creacion.crearBotones(modeloTexto.getTituloBotonEliminar(), 615, 410, contentPane);
+		
+		
 				
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(50, 70, 725, 330);
+		scrollPane.setBounds(50, 90, 725, 300);
 		contentPane.add(scrollPane);
 
 		//FALTA METER ASUNTO , SE PUEDE EN CELDA?????
@@ -144,26 +168,6 @@ public class InterfazEscribirEmail extends JFrame {
 		titulosMenuItemAcciones.add(modeloTexto.getTituloBotonEnviar());
 
 		return titulosMenuItemAcciones;
-	}
-
-	private void crearBotones(String titulo, int x , int y, JPanel panel) {
-		JButton boton = new JButton(titulo);
-		boton.addActionListener(controlBotonesCorreo);
-		boton.setBounds(x, y, 159, 30);	
-		ponerPropiedadesBoton(boton);
-		panel.add(boton);
-	}
-
-	private void ponerPropiedadesBoton(JButton boton) {
-
-		Font fuenteTitulo = new Font("Dialog", Font.BOLD, 14);
-		boton.setForeground(Color.WHITE);
-		boton.setBackground(new java.awt.Color(30, 105, 90));
-		boton.setFont(fuenteTitulo);
-		Border line = new LineBorder(Color.BLACK);
-		Border margin = new EmptyBorder(5, 15, 5, 15);
-		Border compound = new CompoundBorder(line, margin);
-		boton.setBorder(compound);
 	}
 
 }

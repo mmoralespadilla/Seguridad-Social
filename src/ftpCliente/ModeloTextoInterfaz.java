@@ -1,6 +1,6 @@
 package ftpCliente;
 
-public class modeloTextoInterfaz {
+public class ModeloTextoInterfaz {
 	
 	private String tituloLogin = "Login";
 	private String tituloUsuario = "Usuario";
@@ -35,8 +35,17 @@ public class modeloTextoInterfaz {
 	private String tituloBotonAdjuntar = "Adjuntar fichero";
 	private String tituloBotonEnviar = "Enviar";
 	private String cabeceraContenido = "Contenido";
-	
+	private String tituloBotonEliminar = "Eliminar adjunto";
 		
+	
+	public String getTituloBotonEliminar() {
+		return tituloBotonEliminar;
+	}
+
+	public void setTituloBotonEliminar(String tituloBotonEliminar) {
+		this.tituloBotonEliminar = tituloBotonEliminar;
+	}
+
 	public String getCabeceraContenido() {
 		return cabeceraContenido;
 	}

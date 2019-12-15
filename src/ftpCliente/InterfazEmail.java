@@ -29,8 +29,8 @@ public class InterfazEmail extends JFrame {
 	private JPanel contentPane;
 	private DefaultTableModel dtm;
 	private JTable table;
-	private static modeloTextoInterfaz modeloTexto;
-	private static InterfazFtp creacion;
+	private static ModeloTextoInterfaz modeloTexto;
+	private static CreadorInterfaz creacion;
 
 	/**
 	 * Launch the application.
@@ -52,8 +52,8 @@ public class InterfazEmail extends JFrame {
 	 * Create the frame.
 	 */
 	public InterfazEmail() {
-		modeloTexto = new modeloTextoInterfaz();
-		creacion = new InterfazFtp();
+		modeloTexto = new ModeloTextoInterfaz();
+		creacion = new CreadorInterfaz();
 		
 		ArrayList <String> titulosMenuItemAcciones;
 		ArrayList <String> titulosMenuItemAyuda;
@@ -118,10 +118,7 @@ public class InterfazEmail extends JFrame {
 		table.getColumnModel().getColumn(1).setCellRenderer(tcr);
 		scrollPane.setViewportView(table);
 		scrollPane.getViewport().setBackground(Color.WHITE);		
-	}
-	
-	
-	
+	}	
 	
 	private ArrayList <String> llenarListaTituloAyuda(){
 		ArrayList <String> titulosMenuItemAyuda = new ArrayList();
