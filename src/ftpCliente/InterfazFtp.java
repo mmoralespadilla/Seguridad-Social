@@ -109,8 +109,7 @@ public class InterfazFtp extends JFrame {
 		
 		//Buttons			
 		creador.crearBotones (titulosMenuItemTransferencia, 60, contentPane,1);
-		
-		
+			
 		JLabel lblRuta = new JLabel(modeloTexto.getTituloRuta());
 		lblRuta.setBounds(50, 30, 515, 16);
 		lblRuta.setFont(fuenteTitulo);
@@ -185,9 +184,7 @@ public class InterfazFtp extends JFrame {
 		scrollPane.setViewportView(table);	
 		
 		
-		
-		
-		JButton btnAtras = new JButton("<- Atras");
+		JButton btnAtras = creador.elaborarBoton(modeloTexto.getTituloBotonAtras(),460, 20, 105);		
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String ruta = "";
@@ -205,10 +202,7 @@ public class InterfazFtp extends JFrame {
 				}
 			}
 		});
-		
-		
-		
-		btnAtras.setBounds(60, 438, 97, 25);
+				
 		contentPane.add(btnAtras);
 		recargarTabla();	
 	}
@@ -239,9 +233,9 @@ public class InterfazFtp extends JFrame {
 		titulosMenuItemTransferencia.add(modeloTexto.getTituloSubirFichero());
 		titulosMenuItemTransferencia.add(modeloTexto.getTituloDescargarFichero());
 		titulosMenuItemTransferencia.add(modeloTexto.getTituloCrearFichero());
-		titulosMenuItemTransferencia.add(modeloTexto.getTituloEliminarFichero());
 		titulosMenuItemTransferencia.add(modeloTexto.getTituloCrearCarpeta());
-		titulosMenuItemTransferencia.add(modeloTexto.getTituloEliminarCarpeta());
+		titulosMenuItemTransferencia.add(modeloTexto.getTituloEliminar());
+		titulosMenuItemTransferencia.add(modeloTexto.getTituloCambiarNombre());
 				
 		return titulosMenuItemTransferencia;		
 		
