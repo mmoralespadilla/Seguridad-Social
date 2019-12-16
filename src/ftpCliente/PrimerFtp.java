@@ -38,14 +38,6 @@ public class PrimerFtp {
 		cliente.login(user, pass);
 		ficheros = cliente.listFiles();
 		cliente.enterLocalPassiveMode();
-
-		/*
-		 * if (subir("C:\\Users\\Miguel\\Desktop\\PDFS\\frutasyverduras.sql",
-		 * "ejemplo.sql")) { System.out.println("Archivo subido."); } else {
-		 * System.out.println("ERROR AL SUBIR El archivo."); } reescribir("ejemplo.sql",
-		 * "C:\\Users\\Miguel\\Downloads\\mascotas.sql"); crearCarpeta("carpetaPrueba");
-		 * borrarCarpeta("ejemplo.sql"); borrarCarpeta("carpetaPrueba");
-		 */
 	}
 
 	public boolean subir(String archivo, String nombre) {
@@ -63,26 +55,7 @@ public class PrimerFtp {
 		}
 		return subido;
 	}
-
-	public void reescribir(String nombreFichero, String nuevoArchivo) {
-		try {
-			for (FTPFile file : ficheros) {
-				if (file.getName().equals(nombreFichero) && file.isFile()) {
-					cliente.removeDirectory(cliente.printWorkingDirectory() + file.getName());
-					if (subir(nuevoArchivo, nombreFichero)) {
-						System.out.println("Fichero: '" + file.getName() + "' sobreescrito.");
-					}
-				} else {
-					System.out.println("Es un directorio.");
-				}
-			}
-		} catch (NullPointerException e) {
-			System.out.println("El fichero no existe.");
-		} catch (IOException e) {
-			System.out.println("ERROR E/S");
-		}
-	}
-
+	
 	public void crearCarpeta(String nombreCarpeta) {
 		try {
 			if (cliente.makeDirectory(nombreCarpeta)) {

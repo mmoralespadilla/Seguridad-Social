@@ -23,9 +23,8 @@ public class ControladorBotonesFtp implements ActionListener {
 		String nomFichero = "";
 		String ruta = "";
 		String archivo;
-		Object boton = e.getActionCommand();
-		switch (boton.toString()) {
-		case "Subir fichero":
+		String boton = e.getActionCommand();
+		if(boton.equals(textos.getTituloSubirFichero())){
 			try {
 				System.out.println("hey");
 				JFileChooser cargar = new JFileChooser();
@@ -39,9 +38,8 @@ public class ControladorBotonesFtp implements ActionListener {
 			} catch (NullPointerException e1) {
 				System.out.println("No has seleccionado un fichero");
 			}
-			break;
-
-		case "Descargar fichero":
+		}
+		else if(boton.equals(textos.getTituloDescargarFichero())) {
 			try {
 				JFileChooser elegir = new JFileChooser();
 				try {
@@ -56,53 +54,49 @@ public class ControladorBotonesFtp implements ActionListener {
 				System.out.println("No has seleccionado un directorio");
 			} catch (ArrayIndexOutOfBoundsException a1) {
 				System.out.println("No has seleccionado un fichero de la tabla");
-			}
-			break;
-
-		case "Crear fichero":
-			try {
+			} 
+		}
+		else if (boton.equals(textos.getTituloCrearFichero())) {
 				try {
-					nomFichero = JOptionPane.showInputDialog("Nombre del fichero");
-					ftp.crearFichero(nomFichero);
-				} catch (NullPointerException e2) {
-					System.out.println("No has seleccionado un fichero");
-				}
-			} catch (NullPointerException e1) {
-				System.out.println("Acción cancelada");
+					try {
+						nomFichero = JOptionPane.showInputDialog("Nombre del fichero");
+						ftp.crearFichero(nomFichero);
+					} catch (NullPointerException e2) {
+						System.out.println("No has seleccionado un fichero");
+					}
+				} catch (NullPointerException e1) {
+					System.out.println("Acción cancelada");
+				} 
 			}
-			break;
-		case "Eliminar fichero":
-			try {
-				archivo = (String) InterfazFtp.dtm.getValueAt(InterfazFtp.table.getSelectedRow(), 0);
-				ftp.borrarCarpeta(archivo);
-			} catch (ArrayIndexOutOfBoundsException e1) {
-				System.out.println("Selecciona un fichero de la tabla");
+		else if (boton.equals(textos.getTituloEliminar())) {
+				try {
+					archivo = (String) InterfazFtp.dtm.getValueAt(InterfazFtp.table.getSelectedRow(), 0);
+					ftp.borrarCarpeta(archivo);
+				} catch (ArrayIndexOutOfBoundsException e1) {
+					System.out.println("Selecciona un elemento de la tabla");
+				} 
 			}
-			break;
+		else if (boton.equals(textos.getTituloCrearCarpeta())) {
+				try {
+					nomFichero = JOptionPane.showInputDialog("Nombre de la carpeta");
+					if (nomFichero.length() != 0) {
+						ftp.crearCarpeta(nomFichero);
+					} else {
 
-		case "Crear carpeta":
-			try {
-				nomFichero = JOptionPane.showInputDialog("Nombre de la carpeta");
-				if (nomFichero.length() != 0) {
-					ftp.crearCarpeta(nomFichero);
-				} else {
-
-				}
-			} catch (NullPointerException e1) {
-				System.out.println("Acción cancelada");
+					}
+				} catch (NullPointerException e1) {
+					System.out.println("Acción cancelada");
+				} 
 			}
-			break;
-		case "Eliminar carpeta":
-			try {
-				ruta = "";
-				archivo = (String) InterfazFtp.dtm.getValueAt(InterfazFtp.table.getSelectedRow(), 0);
-				ftp.borrarCarpeta(archivo);
-				break;
-			} catch (ArrayIndexOutOfBoundsException e1) {
-				System.out.println("Selecciona una carpeta de la tabla");
-			}
+		else if(boton.equals(textos.getTituloCambiarNombre())) {
+			archivo = (String) InterfazFtp.dtm.getValueAt(InterfazFtp.table.getSelectedRow(), 0);
+			nomFichero = JOptionPane.showInputDialog("Nombre de la carpeta");
+			ftp.renombrar(archivo, nomFichero);
+		}else if(boton.equals(textos.getTituloCambiarUsuario())) {
+			//InterfazFtp.
 		}
 		InterfazFtp.recargarTabla();
 	}
-
 }
+		
+	

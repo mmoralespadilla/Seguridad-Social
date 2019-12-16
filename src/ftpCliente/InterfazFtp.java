@@ -274,4 +274,8 @@ public class InterfazFtp extends JFrame {
 			dtm.addRow(row);
 		}
 	}
+	
+	public static void cerrarVentana() {
+		
+	}
 }
