@@ -1,19 +1,25 @@
 package recibocorreo;
 
+import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.mail.Folder;
+import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
 import javax.mail.Store;
 
-public class ConexionCorreo {
+public class MenuCorreo {
 
+
+	private Folder folder;
+	private ArrayList<String> remitentes = new ArrayList<>();
+	private ArrayList<String> asuntos = new ArrayList<>();
 	private String user;
 	private String pass;
 	
-	public ConexionCorreo(String user, String pass) {
+	public MenuCorreo(String user, String pass) {
 		this.user = user;
 		this.pass = pass;
 	}
@@ -37,6 +43,7 @@ public class ConexionCorreo {
 			store.connect("pop.gmail.com", user, pass);
 			Folder folder = store.getFolder("INBOX");
 			folder.open(Folder.READ_ONLY);
+			store.close();
 			return folder;
 		} catch (NoSuchProviderException e) {
 			System.err.println(e.getMessage());
@@ -44,5 +51,25 @@ public class ConexionCorreo {
 			System.err.println(e.getMessage());
 		}
 		return null;
+	}
+	
+	public Message[] listarMensajes() {
+		Message[] mensajes = null;
+		try {
+			mensajes = folder.getMessages();
+			for (int i = 0; i < mensajes.length; i++) {
+				remitentes.add(mensajes[i].getFrom()[0].toString());
+				asuntos.add(mensajes[i].getSubject());
+			}
+		} catch (MessagingException e) {
+			System.err.println(e.getMessage());
+		}
+		for(String remitente : remitentes)
+			System.out.println(remitente);
+		int contador = 1;
+		for(String asunto : asuntos) {
+			System.out.println(contador++ + ": " + asunto);
+		}
+		return mensajes;
 	}
 }

@@ -32,7 +32,7 @@ public class Main {
 		Panel panel = new Panel();
 		String user = "iamsegsoctrustme@gmail.com";
 		String pass = "segsoc123";
-		ConexionCorreo conmail = new ConexionCorreo(user, pass);
+		MenuCorreo conmail = new MenuCorreo(user, pass);
 		Folder folder = conmail.conectar();
 		ListadoMensajes listmessages = new ListadoMensajes(folder);
 		listmessages.listarMensajes();

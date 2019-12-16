@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -18,17 +19,24 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+import recibocorreo.MenuCorreo;
+import recibocorreo.ListadoMensajes;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.mail.Folder;
+import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 
 public class InterfazEmail extends JFrame {
 
 	private JPanel contentPane;
-	private DefaultTableModel dtm;
-	private JTable table;
+	private static DefaultTableModel dtm;
+	private static JTable table;
 	private static ModeloTextoInterfaz modeloTexto;
 	private static CreadorInterfaz creacion;
 
@@ -117,7 +125,8 @@ public class InterfazEmail extends JFrame {
 		table.getColumnModel().getColumn(0).setCellRenderer(tcr);
 		table.getColumnModel().getColumn(1).setCellRenderer(tcr);
 		scrollPane.setViewportView(table);
-		scrollPane.getViewport().setBackground(Color.WHITE);		
+		scrollPane.getViewport().setBackground(Color.WHITE);	
+		recargarTabla();
 	}	
 	
 	private ArrayList <String> llenarListaTituloAyuda(){
@@ -136,5 +145,35 @@ public class InterfazEmail extends JFrame {
 		titulosMenuItemAcciones.add(modeloTexto.getTituloEmailEnviado());
 		
 		return titulosMenuItemAcciones;
+	}
+	/**
+	 * Metodo para vaciar la tabla
+	 */
+	public static void vaciarTabla() {
+		int a = table.getRowCount() - 1;
+		for (int i = a; i >= 0; i--) {
+			dtm.removeRow(dtm.getRowCount() - 1);
+		}
+	}
+
+	/**
+	 * Metodo que vacia la tabla, y la vuelve a rellenar con los datos de neodatis
+	 */
+	public static void recargarTabla() {
+		vaciarTabla();
+		try {
+			String user = "iamsegsoctrustme@gmail.com";
+			String pass = "segsoc123";
+			recibocorreo.MenuCorreo conexion = new MenuCorreo(user, pass);
+			Folder folder = conexion.conectar();
+			recibocorreo.ListadoMensajes listMensajes = new ListadoMensajes(folder);
+			Message[] mensajes = recibocorreo.ListadoMensajes.listarMensajes();
+			for(int i = mensajes.length - 1; i >= 0; i--) {
+				Object[] row = {mensajes[i].getFrom()[0].toString(), mensajes[i].getSubject()};
+				dtm.addRow(row);
+			}
+		} catch (MessagingException me) {
+			System.err.println(me.getMessage());
+		}
 	}
 }
