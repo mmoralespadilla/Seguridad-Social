@@ -18,7 +18,7 @@ public class CreadorInterfaz {
 	private static PrimerFtp ftp;
 	private ControladorBotonesFtp controlBotones;
 	private ControladorBotonesCorreo controlBotonesCorreo;
-		
+
 	public CreadorInterfaz(PrimerFtp ftp) {
 		this.ftp = ftp;
 		controlBotones = new ControladorBotonesFtp(ftp);		
@@ -45,7 +45,16 @@ public class CreadorInterfaz {
 		}	
 			
 	}
-		
+	
+	public JButton elaborarBoton(String titulo, int x , int y, int anchura) {
+		JButton boton = new JButton(titulo);
+		boton.addActionListener(controlBotonesCorreo);
+		boton.setBounds(x, y, anchura, 30);	
+		ponerPropiedadesBoton(boton);
+	
+		return boton;
+	}
+	
 	public void crearBotones(String titulo, int x , int y, JPanel panel) {
 		JButton boton = new JButton(titulo);
 		boton.addActionListener(controlBotonesCorreo);

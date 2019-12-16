@@ -11,9 +11,9 @@ public class ModeloTextoInterfaz {
 	private String tituloSubirFichero = "Subir fichero";
 	private String tituloDescargarFichero = "Descargar fichero";
 	private String tituloCrearFichero = "Crear fichero";
-	private String tituloEliminarFichero = "Eliminar fichero";
+	private String tituloEliminar = "Eliminar";
 	private String tituloCrearCarpeta = "Crear carpeta";
-	private String tituloEliminarCarpeta = "Eliminar carpeta";
+	private String tituloCambiarNombre = "Cambiar nombre";
 	private String tituloServidor = "Servidor";
 	private String tituloServidorInfor = "Informaciï¿½n FTP";
 	private String tituloServidorHistorial = "Historial de movimientos";
@@ -36,8 +36,32 @@ public class ModeloTextoInterfaz {
 	private String tituloBotonEnviar = "Enviar";
 	private String cabeceraContenido = "Contenido";
 	private String tituloBotonEliminar = "Eliminar adjunto";
-		
-	
+	private String tituloBotonAtras = "< Atrás";
+
+	public String getTituloEliminar() {
+		return tituloEliminar;
+	}
+
+	public String getTituloBotonAtras() {
+		return tituloBotonAtras;
+	}
+
+	public void setTituloBotonAtras(String tituloBotonAtras) {
+		this.tituloBotonAtras = tituloBotonAtras;
+	}
+
+	public void setTituloEliminar(String tituloEliminar) {
+		this.tituloEliminar = tituloEliminar;
+	}
+
+	public String getTituloCambiarNombre() {
+		return tituloCambiarNombre;
+	}
+
+	public void setTituloCambiarNombre(String tituloCambiarNombre) {
+		this.tituloCambiarNombre = tituloCambiarNombre;
+	}
+
 	public String getTituloBotonEliminar() {
 		return tituloBotonEliminar;
 	}
@@ -252,13 +276,7 @@ public class ModeloTextoInterfaz {
 		this.tituloCrearFichero = tituloCrearFichero;
 	}
 
-	public String getTituloEliminarFichero() {
-		return tituloEliminarFichero;
-	}
-
-	public void setTituloEliminarFichero(String tituloEliminarFichero) {
-		this.tituloEliminarFichero = tituloEliminarFichero;
-	}
+	
 
 	public String getTituloCrearCarpeta() {
 		return tituloCrearCarpeta;
@@ -268,13 +286,7 @@ public class ModeloTextoInterfaz {
 		this.tituloCrearCarpeta = tituloCrearCarpeta;
 	}
 
-	public String getTituloEliminarCarpeta() {
-		return tituloEliminarCarpeta;
-	}
-
-	public void setTituloEliminarCarpeta(String tituloEliminarCarpeta) {
-		this.tituloEliminarCarpeta = tituloEliminarCarpeta;
-	}
+	
 
 	public String getTituloTransferencia() {
 		return tituloTransferencia;
