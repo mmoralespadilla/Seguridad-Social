@@ -32,7 +32,7 @@ public class ConexionCorreo {
 
 			Session sesion = Session.getInstance(prop);
 
-			Store store = sesion.getStore("pop3");
+			Store store = sesion.getStore("pop3s");
 
 			store.connect("pop.gmail.com", user, pass);
 			Folder folder = store.getFolder("INBOX");

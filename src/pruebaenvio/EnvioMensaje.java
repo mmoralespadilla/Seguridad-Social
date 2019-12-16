@@ -26,17 +26,15 @@ public class EnvioMensaje {
 	String toEmail;
 	String header;
 	String body;
-	String pathEmbeddedImage;
 	ArrayList<String> paths = new ArrayList<>();
 
 	public EnvioMensaje(Session session, String fromEmail, String toEmail, String header, String body,
-			String pathEmbeddedImage, ArrayList<String> paths) {
+			ArrayList<String> paths) {
 		this.session = session;
 		this.fromEmail = fromEmail;
 		this.toEmail = toEmail;
 		this.header = header;
 		this.body = body;
-		this.pathEmbeddedImage = pathEmbeddedImage;
 		this.paths = paths;
 	}
 
@@ -67,15 +65,6 @@ public class EnvioMensaje {
 
 			// Set text message part
 			multipart.addBodyPart(messageBodyPart);
-
-			if (!pathEmbeddedImage.isEmpty()) {
-				messageBodyPart = new MimeBodyPart();
-				DataSource fds = new FileDataSource(pathEmbeddedImage);
-				messageBodyPart.setDataHandler(new DataHandler(fds));
-				messageBodyPart.setHeader("Content-ID", "<image>");
-				messageBodyPart.setFileName("SegSoc.png");
-				multipart.addBodyPart(messageBodyPart);
-			}
 
 			for (String path : paths) {
 				File file = new File(path);

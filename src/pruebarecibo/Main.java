@@ -38,8 +38,8 @@ public class Main {
 		listmessages.listarMensajes();
 		JEditorPane panelMensaje = new JEditorPane();
 		panelMensaje.setContentType("text/html");
-		MuestraMensaje verMensaje = new MuestraMensaje(folder, 33/*Mete por parámetro la posición del mensaje que quieres abrir (empieza en el 1)*/);
-		panelMensaje.setText(verMensaje.mostrarMensaje().toString());
+		MuestraMensaje verMensaje = new MuestraMensaje(folder, 58/*Mete por parámetro la posición del mensaje que quieres abrir (empieza en el 1)*/);
+		panelMensaje.setText(verMensaje.mostrarMensaje());
 		panelMensaje.setEditable(false);
 		JScrollPane scrollPane = new JScrollPane(panelMensaje);
 		ventana.add(scrollPane);
