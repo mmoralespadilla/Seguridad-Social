@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -127,9 +128,9 @@ public class InterfazLogin extends JDialog {
 						c.printStackTrace();
 					}
 				} else if (comprobarEmail == -1){
-					System.out.println("NO EXISTE CONTRASEÑA");
+					JOptionPane.showMessageDialog(null, "NO EXISTE CONTRASEÑA");
 				} else if (comprobarEmail == -2 ) {
-					System.out.println("NO EXISTE USUARIO");
+					JOptionPane.showMessageDialog(null, "NO EXISTE USUARIO");
 				}
 			}
 
