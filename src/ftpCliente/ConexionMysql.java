@@ -31,7 +31,7 @@ public class ConexionMysql {
 		return cargada;
 	}
 
-	public static int comprobarLogin(String email, String contraseña) {
+	public static int comprobarLogin(String email, String contraseÃ±a) {
 		int tipoLogin = -3;
 		iniciarConexion();
 		String query = "select * from usuarios where email = '"+email+"'";
@@ -40,8 +40,8 @@ public class ConexionMysql {
 			ResultSet rs = st.executeQuery(query);
 			if(rs.next()) {
 				String emailBuscado = rs.getString(1);
-				String contraseñaBuscada = rs.getString(4);
-				if(contraseñaBuscada.equals(contraseña)) {
+				String contraseÃ±aBuscada = rs.getString(2);
+				if(contraseÃ±aBuscada.equals(contraseÃ±a)) {
 					tipoLogin = rs.getInt(2);
 				}else {
 					tipoLogin = -2;
