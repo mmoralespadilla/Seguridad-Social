@@ -1,4 +1,4 @@
-package pruebaenvio;
+package enviocorreo;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;

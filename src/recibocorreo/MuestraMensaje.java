@@ -1,4 +1,4 @@
-package pruebarecibo;
+package recibocorreo;
 
 import java.io.File;
 import java.io.FileOutputStream;

@@ -1,4 +1,4 @@
-package pruebaenvio;
+package enviocorreo;
 
 import java.util.ArrayList;
 import java.util.Properties;

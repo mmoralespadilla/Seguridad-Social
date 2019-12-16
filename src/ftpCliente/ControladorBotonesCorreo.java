@@ -5,10 +5,18 @@ import java.awt.event.ActionListener;
 
 public class ControladorBotonesCorreo implements ActionListener{
 
+	ModeloTextoInterfaz textos;
+	
+	public ControladorBotonesCorreo() {
+		super();
+		textos = new ModeloTextoInterfaz();
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		String boton = e.getActionCommand().toString();
+		if(boton.equals(textos.getTituloAccionesRefrescar())) {
+			
+		}
 	}
 
 }

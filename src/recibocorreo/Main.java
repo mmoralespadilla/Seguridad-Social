@@ -1,4 +1,4 @@
-package pruebarecibo;
+package recibocorreo;
 
 import java.awt.Dimension;
 import java.awt.Panel;

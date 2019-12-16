@@ -10,10 +10,12 @@ import javax.swing.JOptionPane;
 
 public class ControladorBotonesFtp implements ActionListener {
 	private PrimerFtp ftp;
+	private ModeloTextoInterfaz textos;
 
 	public ControladorBotonesFtp(PrimerFtp ftp) {
 		super();
 		this.ftp = ftp;
+		textos = new ModeloTextoInterfaz();
 	}
 
 	@Override

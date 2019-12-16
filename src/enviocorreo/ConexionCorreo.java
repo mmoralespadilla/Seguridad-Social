@@ -1,4 +1,4 @@
-package pruebaenvio;
+package enviocorreo;
 
 import java.util.Properties;
 
