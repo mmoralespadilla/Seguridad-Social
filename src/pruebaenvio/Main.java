@@ -19,8 +19,8 @@ public class Main {
 		final String toEmail = "iamsegsoctrustme@gmail.com"; // can be any email id 
 		final String fromEmail = "iamsegsoctrustme@gmail.com"; //requires valid gmail id
 		final String pass = "segsoc123"; // correct password for gmail id
-		String header = "Soy er kbsero";
-		String body = "<H1>Soy tu cuerpesito papuh</H1><img src=\"C:\\Users\\josag\\Desktop.\\images.jpg\">";
+		String header = "Ojalá ste sea el weno";
+		String body = "<H1>Vamooo</H1><br><img src=\"https://www.vectorlogo.es/wp-content/uploads/2018/01/logo-vector-instituto-nacional-de-la-seguridad-social.jpg\"/>";
 		ArrayList<String> paths = new ArrayList<>();
 		paths.add(System.getProperty("user.home") + "/Desktop/AndroidManifest.xml");
 		paths.add(System.getProperty("user.home") + "/Desktop/gato felis.jpg");

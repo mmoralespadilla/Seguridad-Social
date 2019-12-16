@@ -27,7 +27,9 @@ public class ListadoMensajes {
 		}
 		for(String remitente : remitentes)
 			System.out.println(remitente);
-		for(String asunto : asuntos)
-			System.out.println(asunto);
+		int contador = 1;
+		for(String asunto : asuntos) {
+			System.out.println(contador++ + ": " + asunto);
+		}
 	}
 }

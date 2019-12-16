@@ -1,5 +1,6 @@
 package pruebaenvio;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,9 +43,8 @@ public class EnvioMensaje {
 			MimeMessage msg = new MimeMessage(session);
 			msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
 			msg.addHeader("format", "flowed");
-			msg.addHeader("Content-Transfer-Encoding", "8bit");
 
-			msg.setFrom(new InternetAddress(fromEmail, "NoReply-JD"));
+			msg.setFrom(new InternetAddress(fromEmail, "Seguridad Social"));
 
 			msg.setReplyTo(InternetAddress.parse(toEmail, false));
 
@@ -58,21 +58,20 @@ public class EnvioMensaje {
 			BodyPart messageBodyPart = new MimeBodyPart();
 
 			// Fill the message
-			messageBodyPart.setText(body);
+			messageBodyPart.setContent(body, "text/html");
 
 			// Create a multipart message for attachment
-			Multipart multipart = new MimeMultipart();
+			Multipart multipart = new MimeMultipart("related");
 
 			// Set text message part
 			multipart.addBodyPart(messageBodyPart);
 
-			// Second part is attachment
-
 			for (String path : paths) {
+				File file = new File(path);
 				messageBodyPart = new MimeBodyPart();
 				DataSource source = new FileDataSource(path);
 				messageBodyPart.setDataHandler(new DataHandler(source));
-				messageBodyPart.setFileName(path);
+				messageBodyPart.setFileName(file.getName());
 				multipart.addBodyPart(messageBodyPart);
 			}
 
