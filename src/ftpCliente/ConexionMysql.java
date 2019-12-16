@@ -40,7 +40,7 @@ public class ConexionMysql {
 			ResultSet rs = st.executeQuery(query);
 			if(rs.next()) {
 				String emailBuscado = rs.getString(1);
-				String contraseñaBuscada = rs.getString(4);
+				String contraseñaBuscada = rs.getString(2);
 				if(contraseñaBuscada.equals(contraseña)) {
 					tipoLogin = rs.getInt(2);
 				}else {

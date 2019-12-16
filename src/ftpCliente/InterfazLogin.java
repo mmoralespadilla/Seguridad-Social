@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -23,13 +24,12 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-
 public class InterfazLogin extends JDialog {
 
 	private BufferedImage image;
 	private JPanel contentPane;
 	private JTextField textFieldUsuario;
-	private JTextField textFieldContrase�a;
+	private JTextField textFieldContraseña;
 	private JPanel panelLogin;
 	private JPanel panelImagen;
 	private String rutaImagen;
@@ -54,7 +54,8 @@ public class InterfazLogin extends JDialog {
 
 	/**
 	 * Create the frame.
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	public InterfazLogin() throws IOException {
 		setTitle(modeloTexto.getTituloLogin());
@@ -71,7 +72,6 @@ public class InterfazLogin extends JDialog {
 
 		panelLogin = new JPanel();
 		panelLogin.setBorder(new LineBorder(new Color(30, 105, 90), 3));
-
 
 		panelLogin.setBounds(40, 86, 427, 168);
 		contentPane.add(panelLogin);
@@ -96,32 +96,44 @@ public class InterfazLogin extends JDialog {
 		lblContrasea.setFont(fuenteTitulo);
 		panelLogin.add(lblContrasea);
 
-		textFieldContrase�a = new JTextField();
-		textFieldContrase�a.setColumns(10);
-		textFieldContrase�a.setBounds(134, 75, 231, 25);
-		panelLogin.add(textFieldContrase�a);
+		textFieldContraseña = new JTextField();
+		textFieldContraseña.setColumns(10);
+		textFieldContraseña.setBounds(134, 75, 231, 25);
+		panelLogin.add(textFieldContraseña);
 
 		JButton btnLogin = new JButton(modeloTexto.getTituloLogin());
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PrimerFtp ftp = new PrimerFtp("localhost", "usuario@usuario.com", "123", "usuario@usuario.com");
-				try {
-					ftp.init();
-				} catch (SocketException a) {
-					// TODO Auto-generated catch block
-					a.printStackTrace();
-				} catch (IOException b) {
-					// TODO Auto-generated catch block
-					b.printStackTrace();
-				}
-				try {
-					InterfazFtp frame = new InterfazFtp(ftp);
-					dispose();
-					frame.setVisible(true);
-				} catch (Exception c) {
-					c.printStackTrace();
+				String password = textFieldContraseña.getText().toString();
+				String usuario = textFieldUsuario.getText().toString();
+				int comprobarEmail = ConexionMysql.comprobarLogin(usuario, password);
+				if ( comprobarEmail >= 0) {
+					String email = "";
+					PrimerFtp ftp = new PrimerFtp("localhost",usuario, password, email);
+					try {
+						ftp.init();
+					} catch (SocketException a) {
+						// TODO Auto-generated catch block
+						a.printStackTrace();
+					} catch (IOException b) {
+						// TODO Auto-generated catch block
+						b.printStackTrace();
+					}
+					try {
+						InterfazFtp frame = new InterfazFtp(ftp);
+						dispose();
+
+						frame.setVisible(true);
+					} catch (Exception c) {
+						c.printStackTrace();
+					}
+				} else if (comprobarEmail == -1){
+					JOptionPane.showMessageDialog(null, "NO EXISTE CONTRASEÑA");
+				} else if (comprobarEmail == -2 ) {
+					JOptionPane.showMessageDialog(null, "NO EXISTE USUARIO");
 				}
 			}
+
 		});
 		btnLogin.setBounds(165, 120, 97, 30);
 		btnLogin.setForeground(Color.WHITE);
@@ -133,13 +145,14 @@ public class InterfazLogin extends JDialog {
 		btnLogin.setBorder(compound);
 		panelLogin.add(btnLogin);
 
-		
-		//?????????
-		/*rutaImagen = "C:\\Users\\Inma C\\Desktop\\FP MULTIP\\TRABAJO COLABORATIVO\\Interfaz\\logo.png";
-		image = ImageIO.read(new File(rutaImagen));
-		JLabel Imagen = new JLabel(new ImageIcon(image));
-		Imagen.setBounds(new Rectangle(-26, -137, 495, 322));
-		contentPane.add(Imagen);*/
+		// ?????????
+		/*
+		 * rutaImagen =
+		 * "C:\\Users\\Inma C\\Desktop\\FP MULTIP\\TRABAJO COLABORATIVO\\Interfaz\\logo.png"
+		 * ; image = ImageIO.read(new File(rutaImagen)); JLabel Imagen = new JLabel(new
+		 * ImageIcon(image)); Imagen.setBounds(new Rectangle(-26, -137, 495, 322));
+		 * contentPane.add(Imagen);
+		 */
 
 	}
 
