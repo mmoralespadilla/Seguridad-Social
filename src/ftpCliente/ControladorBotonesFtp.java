@@ -94,7 +94,8 @@ public class ControladorBotonesFtp implements ActionListener {
 			nomFichero = JOptionPane.showInputDialog("Nombre de la carpeta");
 			ftp.renombrar(archivo, nomFichero);
 		}else if(boton.equals(textos.getTituloCambiarUsuario())) {
-			//InterfazFtp.
+			
+			
 		}
 		InterfazFtp.recargarTabla();
 	}

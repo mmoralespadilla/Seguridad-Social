@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.ClientInfoStatus;
+import java.text.Normalizer.Form;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -36,161 +37,128 @@ import java.awt.event.ActionEvent;
 public class InterfazFtp extends JFrame {
 
 	private JPanel contentPane;
-	protected int posicionRuta = 0;
+	public static int posicionRuta = 0;
 	public static DefaultTableModel dtm;
 	public static JTable table;
 	private static PrimerFtp ftp;
 	private static ModeloTextoInterfaz modeloTexto;
 	private static CreadorInterfaz creador;
-	
+
 	/**
 	 * Create the frame.
 	 */
 	public InterfazFtp(PrimerFtp ftp) {
-		//Actulizar
+		// Actulizar
 		this.ftp = ftp;
-		creador = new CreadorInterfaz(ftp);				
+		creador = new CreadorInterfaz(ftp);
 		modeloTexto = new ModeloTextoInterfaz();
-		ArrayList <String> titulosMenuItemArchivo;
-		ArrayList <String> titulosMenuItemTransferencia;
-		ArrayList <String> titulosMenuItemServidor;
-		ArrayList <String> titulosMenuItemAyuda;
-		ArrayList <String> titulosMenuItemCorreo;
-		ArrayList <String> titulosBotones;
+		ArrayList<String> titulosMenuItemArchivo;
+		ArrayList<String> titulosMenuItemTransferencia;
+		ArrayList<String> titulosMenuItemServidor;
+		ArrayList<String> titulosMenuItemAyuda;
+		ArrayList<String> titulosMenuItemCorreo;
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 855, 547);
 		Font fuenteTitulo = new Font("Dialog", Font.BOLD, 14);
 
-		
-		//Menu
+		// Menu
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBackground(new java.awt.Color(30, 105, 90));
 		Border line = new LineBorder(Color.BLACK);
 		Border margin = new EmptyBorder(5, 15, 5, 15);
-		Border compound = new CompoundBorder(line, margin);	
-		menuBar.setBorder(compound);	
-		setJMenuBar(menuBar);		
-		
-		//File menu
-		JMenu mnArchivo = creador.crearMenu (modeloTexto.getTituloArchivo(), menuBar);				
-		titulosMenuItemArchivo = llenarListaTituloArchivo();
-		creador.crearItems(titulosMenuItemArchivo, mnArchivo);						
-		
-		//Transfer menu
-		JMenu mnTransferencia = creador.crearMenu (modeloTexto.getTituloTransferencia(), menuBar);				
-		titulosMenuItemTransferencia = llenarListaTituloTransferencia ();
-		creador.crearItems (titulosMenuItemTransferencia, mnTransferencia);		
-		
-		//Server menu		
-		JMenu mnServidor = creador.crearMenu(modeloTexto.getTituloServidor(), menuBar);				
-		titulosMenuItemServidor = llenarListaTituloServidor ();
-		creador.crearItems (titulosMenuItemServidor, mnServidor);		
-	
-		//Help menu		
+		Border compound = new CompoundBorder(line, margin);
+		menuBar.setBorder(compound);
+		setJMenuBar(menuBar);
+
+		// File menu
+		JMenu mnArchivo = creador.crearMenu(modeloTexto.getTituloArchivo(), menuBar);
+		JMenuItem mnCambioUsuario = new JMenuItem(modeloTexto.getTituloCambiarUsuario());
+		mnArchivo.add(mnCambioUsuario);
+		mnCambioUsuario.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				System.out.println("Hola");
+				InterfazLogin login = new InterfazLogin();
+				login.setVisible(true);
+			}
+		});
+
+		// Transfer menu
+		JMenu mnTransferencia = creador.crearMenu(modeloTexto.getTituloTransferencia(), menuBar);
+		titulosMenuItemTransferencia = llenarListaTituloTransferencia();
+		creador.crearItems(titulosMenuItemTransferencia, mnTransferencia);
+
+		// Server menu
+		JMenu mnServidor = creador.crearMenu(modeloTexto.getTituloServidor(), menuBar);
+		titulosMenuItemServidor = llenarListaTituloServidor();
+		creador.crearItems(titulosMenuItemServidor, mnServidor);
+
+		// Help menu
 		JMenu mnAyuda = creador.crearMenu(modeloTexto.getTituloAyuda(), menuBar);
 		creador.ponerPropiedadesMenu(mnAyuda);
-		menuBar.add(mnAyuda);	
+		menuBar.add(mnAyuda);
 		titulosMenuItemAyuda = llenarListaTituloAyuda();
-		creador.crearItems (titulosMenuItemAyuda, mnAyuda);
-		
-		//Email menu		
+		creador.crearItems(titulosMenuItemAyuda, mnAyuda);
+
+		// Email menu
 		JMenu mnCorreo = creador.crearMenu(modeloTexto.getTituloCorreo(), menuBar);
-		creador.ponerPropiedadesMenu(mnCorreo);	
-		menuBar.add(mnCorreo);	
+		creador.ponerPropiedadesMenu(mnCorreo);
+		menuBar.add(mnCorreo);
 		titulosMenuItemCorreo = llenarListaTituloCorreo();
-		creador.crearItems(titulosMenuItemCorreo, mnCorreo);	
-		
-		//Global Layout
+		creador.crearItems(titulosMenuItemCorreo, mnCorreo);
+
+		// Global Layout
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		contentPane.setBackground(new java.awt.Color(218, 230, 228));
-		
-		//Buttons			
-		creador.crearBotones (titulosMenuItemTransferencia, 60, contentPane,1);
-			
+
+		// Buttons
+		creador.crearBotones(titulosMenuItemTransferencia, 60, contentPane, 1);
+
+		// Label
 		JLabel lblRuta = new JLabel(modeloTexto.getTituloRuta());
 		lblRuta.setBounds(50, 30, 515, 16);
 		lblRuta.setFont(fuenteTitulo);
 		contentPane.add(lblRuta);
-		
-		JLabel lblUsuario= new JLabel(modeloTexto.getTituloUsuario());
+
+		JLabel lblUsuario = new JLabel(modeloTexto.getTituloUsuario());
 		lblUsuario.setBounds(615, 30, 205, 16);
 		lblUsuario.setFont(fuenteTitulo);
 		contentPane.add(lblUsuario);
-		
-		
-		//Table
+
+		// Table
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(50, 60, 515, 365);
 		contentPane.add(scrollPane);
-					
 		dtm = new DefaultTableModel();
-		
 		table = new JTable(dtm) {
 			public boolean isCellEditable(int rowIndex, int vColIndex) {
 				return false;
 			}
 		};
-		table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				String ruta;
-				String workSpaceActual = "";
-				try {
-					workSpaceActual = ftp.getCliente().printWorkingDirectory();
-				} catch (IOException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
-				if(e.getClickCount() == 2) {
-					ruta = (String)InterfazFtp.dtm.getValueAt(InterfazFtp.table.getSelectedRow(), 0);
-					if(!ruta.contains(".")) {
-						try {
-							ruta = ftp.getRutas().get(posicionRuta )+"/"+ ruta;
-							ftp.getCliente().changeWorkingDirectory(ruta);
-							if(!workSpaceActual.equals(ftp.getCliente().printWorkingDirectory())) {
-								ftp.getRutas().add(ruta);
-								posicionRuta ++;
-								lblRuta.setText("Ruta: " + ruta);
-								
-							}
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-						recargarTabla();
-					}
-				}
-			}
-		});
+		
+		MouseAdapterFtp adapterTable = new MouseAdapterFtp(ftp, lblRuta);
+		table.addMouseListener(adapterTable);
 		table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		
+
 		// Cabeceras de la tabla
-		dtm.addColumn(modeloTexto.getTituloCabeceraTabla());	
-		
+		dtm.addColumn(modeloTexto.getTituloCabeceraTabla());
+		//table.setDefaultRenderer(Object.class, new BorderTableCellRenderer());
 		table.setSelectionMode(0);
-		
-		// Editor de celdas para centrar los datos
-		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
-		
-		
-		//CUANDO SE VEA SI SON FICHEROS O DIRECTORIOS SE ALINEARAN EN OTRO FORMATOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-		tcr.setHorizontalAlignment(SwingConstants.CENTER);
-		table.getColumnModel().getColumn(0).setCellRenderer(tcr);
-		
+
 		scrollPane.getViewport().setBackground(Color.WHITE);
-		scrollPane.setViewportView(table);	
-		
-		
-		JButton btnAtras = creador.elaborarBoton(modeloTexto.getTituloBotonAtras(),460, 20, 105);		
+		scrollPane.setViewportView(table);
+
+		JButton btnAtras = creador.elaborarBoton(modeloTexto.getTituloBotonAtras(), 460, 20, 105);
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String ruta = "";
-				if(posicionRuta >= 1) {
-					posicionRuta --;
+				if (posicionRuta >= 1) {
+					posicionRuta--;
 					try {
 						ftp.getCliente().changeWorkingDirectory(ftp.getRutas().get(posicionRuta));
 						ruta = ftp.getCliente().printWorkingDirectory();
@@ -203,52 +171,42 @@ public class InterfazFtp extends JFrame {
 				}
 			}
 		});
-				
+		lblUsuario.setText("Usuario: " + ftp.getUser());
 		contentPane.add(btnAtras);
-		recargarTabla();	
+		recargarTabla();
 	}
-		
-	private ArrayList <String> llenarListaTituloCorreo(){
-		ArrayList <String> titulosMenuItemCorreo = new ArrayList();
+
+	private ArrayList<String> llenarListaTituloCorreo() {
+		ArrayList<String> titulosMenuItemCorreo = new ArrayList();
 		titulosMenuItemCorreo.add(modeloTexto.getTituloCorreoAbrir());
 		return titulosMenuItemCorreo;
 	}
-	
-	
-	private ArrayList <String> llenarListaTituloArchivo(){
-		ArrayList <String> titulosMenuItemArchivo = new ArrayList();
-		titulosMenuItemArchivo.add(modeloTexto.getTituloCambiarUsuario());
-		return titulosMenuItemArchivo;
-	}
-	
-	private ArrayList <String> llenarListaTituloAyuda(){
-		ArrayList <String> titulosMenuItemAyuda = new ArrayList();
+
+	private ArrayList<String> llenarListaTituloAyuda() {
+		ArrayList<String> titulosMenuItemAyuda = new ArrayList();
 		titulosMenuItemAyuda.add(modeloTexto.getTituloAyudaSobre());
 		return titulosMenuItemAyuda;
 	}
-		
-	
-	
-	private ArrayList <String> llenarListaTituloTransferencia (){
-		ArrayList <String> titulosMenuItemTransferencia = new ArrayList();
+
+	private ArrayList<String> llenarListaTituloTransferencia() {
+		ArrayList<String> titulosMenuItemTransferencia = new ArrayList();
 		titulosMenuItemTransferencia.add(modeloTexto.getTituloSubirFichero());
 		titulosMenuItemTransferencia.add(modeloTexto.getTituloDescargarFichero());
 		titulosMenuItemTransferencia.add(modeloTexto.getTituloCrearFichero());
 		titulosMenuItemTransferencia.add(modeloTexto.getTituloCrearCarpeta());
 		titulosMenuItemTransferencia.add(modeloTexto.getTituloEliminar());
 		titulosMenuItemTransferencia.add(modeloTexto.getTituloCambiarNombre());
-				
-		return titulosMenuItemTransferencia;		
-		
+		return titulosMenuItemTransferencia;
+
 	}
-	
-	private ArrayList <String> llenarListaTituloServidor (){
-		ArrayList <String> titulosMenuItemServidor = new ArrayList();
+
+	private ArrayList<String> llenarListaTituloServidor() {
+		ArrayList<String> titulosMenuItemServidor = new ArrayList();
 		titulosMenuItemServidor.add(modeloTexto.getTituloServidorInfor());
-		titulosMenuItemServidor.add(modeloTexto.getTituloServidorHistorial());					
-		return titulosMenuItemServidor;		
-		
+		titulosMenuItemServidor.add(modeloTexto.getTituloServidorHistorial());
+		return titulosMenuItemServidor;
 	}
+
 	/**
 	 * Metodo para vaciar la tabla
 	 */
@@ -270,13 +228,13 @@ public class InterfazFtp extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for(int i = 0; i < ftp.getFicheros().length; i++) {
-			Object[] row = {ftp.getFicheros()[i].getName()};
+		for (int i = 0; i < ftp.getFicheros().length; i++) {
+			Object[] row = { ftp.getFicheros()[i].getName() };
 			dtm.addRow(row);
 		}
 	}
-	
-	public static void cerrarVentana() {
+
+	private void cerrarVentana() {
 		
 	}
 }

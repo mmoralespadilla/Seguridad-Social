@@ -5,12 +5,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
 public class ConexionMysql {
 	private static Connection con;
-
+	public static String email;
 	public static boolean iniciarConexion() {
 		boolean cargada = false;
 		try {
@@ -31,18 +32,20 @@ public class ConexionMysql {
 		return cargada;
 	}
 
-	public static int comprobarLogin(String email, String contraseña) {
+	public static int comprobarLogin(String usuario, String contraseña) {
 		int tipoLogin = -3;
 		iniciarConexion();
-		String query = "select * from usuarios where email = '"+email+"'";
+		String query = "select * from usuarios where usuario = '"+usuario+"'";
 		try {
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(query);
 			if(rs.next()) {
-				String emailBuscado = rs.getString(1);
+				String usuarioBuscado = rs.getString(1);
 				String contraseñaBuscada = rs.getString(2);
+				String emailBuscado = rs.getString(4);
 				if(contraseñaBuscada.equals(contraseña)) {
-					tipoLogin = rs.getInt(2);
+					email = emailBuscado;
+					tipoLogin = rs.getInt(5);
 				}else {
 					tipoLogin = -2;
 				}

@@ -91,7 +91,6 @@ public class CreadorInterfaz {
 		item.setFont(fuenteTitulo);		
 	}	
 	public void ponerPropiedadesBoton(JButton boton){
-		
 		Font fuenteTitulo = new Font("Dialog", Font.BOLD, 14);	
 		boton.setForeground(Color.WHITE);
 		boton.setBackground(new java.awt.Color(30, 105, 90));
@@ -101,9 +100,4 @@ public class CreadorInterfaz {
 		Border compound = new CompoundBorder(line, margin);	
 		boton.setBorder(compound);		
 	}
-	
-	
-	
-	
-
 }

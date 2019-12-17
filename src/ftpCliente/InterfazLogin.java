@@ -57,9 +57,8 @@ public class InterfazLogin extends JDialog {
 	 * 
 	 * @throws IOException
 	 */
-	public InterfazLogin() throws IOException {
+	public InterfazLogin(){
 		setTitle(modeloTexto.getTituloLogin());
-
 		setResizable(false);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 524, 312);
@@ -67,7 +66,6 @@ public class InterfazLogin extends JDialog {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		;
 		contentPane.setBackground(new java.awt.Color(218, 230, 228));
 
 		panelLogin = new JPanel();
@@ -106,9 +104,9 @@ public class InterfazLogin extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				String password = textFieldContraseña.getText().toString();
 				String usuario = textFieldUsuario.getText().toString();
-				int comprobarEmail = ConexionMysql.comprobarLogin(usuario, password);
-				if ( comprobarEmail >= 0) {
-					String email = "";
+				int comprobarLogin = ConexionMysql.comprobarLogin(usuario, password);
+				if (comprobarLogin >= 0) {
+					String email = ConexionMysql.email;
 					PrimerFtp ftp = new PrimerFtp("localhost",usuario, password, email);
 					try {
 						ftp.init();
@@ -122,18 +120,16 @@ public class InterfazLogin extends JDialog {
 					try {
 						InterfazFtp frame = new InterfazFtp(ftp);
 						dispose();
-
 						frame.setVisible(true);
 					} catch (Exception c) {
 						c.printStackTrace();
 					}
-				} else if (comprobarEmail == -1){
+				} else if (comprobarLogin == -1){
 					JOptionPane.showMessageDialog(null, "NO EXISTE CONTRASEÑA");
-				} else if (comprobarEmail == -2 ) {
+				} else if (comprobarLogin == -2 ) {
 					JOptionPane.showMessageDialog(null, "NO EXISTE USUARIO");
 				}
 			}
-
 		});
 		btnLogin.setBounds(165, 120, 97, 30);
 		btnLogin.setForeground(Color.WHITE);
@@ -144,16 +140,5 @@ public class InterfazLogin extends JDialog {
 		Border compound = new CompoundBorder(line, margin);
 		btnLogin.setBorder(compound);
 		panelLogin.add(btnLogin);
-
-		// ?????????
-		/*
-		 * rutaImagen =
-		 * "C:\\Users\\Inma C\\Desktop\\FP MULTIP\\TRABAJO COLABORATIVO\\Interfaz\\logo.png"
-		 * ; image = ImageIO.read(new File(rutaImagen)); JLabel Imagen = new JLabel(new
-		 * ImageIcon(image)); Imagen.setBounds(new Rectangle(-26, -137, 495, 322));
-		 * contentPane.add(Imagen);
-		 */
-
 	}
-
 }
