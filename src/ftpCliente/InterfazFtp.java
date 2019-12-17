@@ -47,6 +47,7 @@ public class InterfazFtp extends JFrame {
 	 * Create the frame.
 	 */
 	public InterfazFtp(PrimerFtp ftp) {
+		//Actulizar
 		this.ftp = ftp;
 		creador = new CreadorInterfaz(ftp);				
 		modeloTexto = new ModeloTextoInterfaz();

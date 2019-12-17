@@ -20,6 +20,7 @@ public class ControladorBotonesFtp implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		//Comentario para subir
 		String nomFichero = "";
 		String ruta = "";
 		String archivo;
