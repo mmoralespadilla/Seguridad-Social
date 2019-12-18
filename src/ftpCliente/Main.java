@@ -1,8 +1,11 @@
 package ftpCliente;
 
+import java.util.Date;
+
 public class Main {
 
 	public static void main(String[] args) {
+		System.out.println(new Date());
 		int login = ConexionMysql.comprobarLogin("admin@gmail.com", "123");
 		switch (login){
 		case 0:

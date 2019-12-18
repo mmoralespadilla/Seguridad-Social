@@ -109,20 +109,21 @@ public class InterfazLogin extends JDialog {
 					String email = ConexionMysql.email;
 					PrimerFtp ftp = new PrimerFtp("localhost",usuario, password, email);
 					try {
-						ftp.init();
+						if(ftp.init()) {
+							try {
+								InterfazFtp frame = new InterfazFtp(ftp);
+								dispose();
+								frame.setVisible(true);
+							} catch (Exception c) {
+								c.printStackTrace();
+							}
+						}
 					} catch (SocketException a) {
 						// TODO Auto-generated catch block
 						a.printStackTrace();
 					} catch (IOException b) {
 						// TODO Auto-generated catch block
 						b.printStackTrace();
-					}
-					try {
-						InterfazFtp frame = new InterfazFtp(ftp);
-						dispose();
-						frame.setVisible(true);
-					} catch (Exception c) {
-						c.printStackTrace();
 					}
 				} else if (comprobarLogin == -1){
 					JOptionPane.showMessageDialog(null, "NO EXISTE CONTRASEÑA");

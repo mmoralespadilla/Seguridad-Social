@@ -33,11 +33,13 @@ public class PrimerFtp {
 		rutas.add("/");
 	}
 
-	public void init() throws SocketException, IOException {
+	public boolean init() throws SocketException, IOException {
+		boolean conectado = false;
 		cliente.connect(host, 21);
-		cliente.login(user, pass);
+		conectado = cliente.login(user, pass);
 		ficheros = cliente.listFiles();
 		cliente.enterLocalPassiveMode();
+		return conectado;
 	}
 
 	public boolean subir(String archivo, String nombre) {
@@ -47,6 +49,8 @@ public class PrimerFtp {
 			in = new BufferedInputStream(new FileInputStream(archivo));
 			if (cliente.storeFile(nombre, in)) {
 				subido = true;
+				System.out.println(archivo + nombre);
+				ConexionMysql.insertarMovimiento(user, "Subir", "Subido archivo "+nombre);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
