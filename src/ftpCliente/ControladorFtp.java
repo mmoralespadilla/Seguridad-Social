@@ -205,13 +205,13 @@ public class ControladorFtp {
 		int returnF = elegir.showDialog(null, "Descargar..");
 		if (returnF == JFileChooser.APPROVE_OPTION) {
 			fileDescargar = elegir.getSelectedFile();
-			dirDest = fileDescargar.getAbsolutePath();
+			dirDest = (fileDescargar.getAbsolutePath()).toString();
 			archivoDirDestino = dirDest + File.separator + nombre;
 			System.out.println(archivoDirDestino);
 
 			try {
+				cliente.setFileType(FTPClient.BINARY_FILE_TYPE);
 				BufferedOutputStream salida = new BufferedOutputStream(new FileOutputStream(archivoDirDestino));
-				salida.close();
 				if (cliente.retrieveFile(nombre, salida)) {
 					System.out.println(
 							ConexionMysql.insertarMovimiento(user, "Descargar", "Fichero " + nombre + " descargado"));
@@ -219,6 +219,7 @@ public class ControladorFtp {
 				} else {
 					JOptionPane.showMessageDialog(null, nombre + "=> No se ha podido descargar...");
 				}
+				salida.close();
 			} catch (Exception e) {
 				System.out.println("ERROR");
 			}

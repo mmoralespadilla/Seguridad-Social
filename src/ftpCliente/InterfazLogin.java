@@ -45,6 +45,7 @@ public class InterfazLogin extends JDialog {
 				try {
 					InterfazLogin frame = new InterfazLogin();
 					frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
