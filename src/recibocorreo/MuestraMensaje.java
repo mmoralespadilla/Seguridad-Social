@@ -25,7 +25,7 @@ public class MuestraMensaje {
 		this.posMensaje = posMensaje;
 	}
 
-	public String mostrarMensaje() {
+	public String mostrarMensaje(){
 		StringBuilder txtMensaje = new StringBuilder();
 		try {
 			Message mensaje = folder.getMessage(posMensaje);
@@ -40,7 +40,7 @@ public class MuestraMensaje {
 					if (bodyPart.isMimeType("text/*")) {
 						txtMensaje.append(bodyPart.getContent().toString());
 						System.out.println(bodyPart.getContent());
-					} else if (bodyPart.getDisposition().equals(BodyPart.ATTACHMENT)){
+					} else if (bodyPart.getDisposition() != null && bodyPart.getDisposition().equals(BodyPart.ATTACHMENT)){
 						MimeBodyPart filePart = (MimeBodyPart) multi.getBodyPart(j);
 						if(!filePart.getFileName().equals("unnamed.jpg")){
 						filePart.saveFile(
@@ -52,7 +52,6 @@ public class MuestraMensaje {
 							txtMensaje.append("<img src=\"https://www.vectorlogo.es/wp-content/uploads/2018/01/logo-vector-instituto-nacional-de-la-seguridad-social.jpg\"/>");
 							System.out.println(System.getProperty("user.home") + "/Downloads/SegSoc.png");
 						}
-						// System.out.println(txtMensaje);
 					}
 				}
 				return txtMensaje.toString();

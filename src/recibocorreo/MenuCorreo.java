@@ -3,6 +3,7 @@ package recibocorreo;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import javax.mail.Flags;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -13,18 +14,23 @@ import javax.mail.Store;
 public class MenuCorreo {
 
 
-	private Folder folder;
+	private static Folder folder;
+	private static Store store;
 	private ArrayList<String> remitentes = new ArrayList<>();
 	private ArrayList<String> asuntos = new ArrayList<>();
-	private String user;
-	private String pass;
+	private static String user;
+	private static String pass;
 	
 	public MenuCorreo(String user, String pass) {
 		this.user = user;
 		this.pass = pass;
 	}
 	
-	public Folder conectar() {
+	public MenuCorreo() {
+		
+	}
+	
+	public void conectar() {
 		try {
 			Properties prop = new Properties();
 
@@ -38,24 +44,26 @@ public class MenuCorreo {
 
 			Session sesion = Session.getInstance(prop);
 
-			Store store = sesion.getStore("pop3s");
+			store = sesion.getStore("pop3s");
 
 			store.connect("pop.gmail.com", user, pass);
-			Folder folder = store.getFolder("INBOX");
-			folder.open(Folder.READ_ONLY);
-			store.close();
-			return folder;
+			folder = store.getFolder("INBOX");
+			folder.open(Folder.READ_WRITE);
+			System.out.println(folder.getMessageCount());
 		} catch (NoSuchProviderException e) {
 			System.err.println(e.getMessage());
 		} catch (MessagingException e) {
 			System.err.println(e.getMessage());
+			e.printStackTrace();
 		}
-		return null;
 	}
 	
 	public Message[] listarMensajes() {
 		Message[] mensajes = null;
 		try {
+			mensajes = folder.getMessages();
+			for (Message mensaje : mensajes)
+				mensaje.setFlag(Flags.Flag.DELETED, false);
 			mensajes = folder.getMessages();
 			for (int i = 0; i < mensajes.length; i++) {
 				remitentes.add(mensajes[i].getFrom()[0].toString());
@@ -72,4 +80,68 @@ public class MenuCorreo {
 		}
 		return mensajes;
 	}
+	
+	/*public void conectarImap() {
+		try {
+			Properties prop = new Properties();
+
+			// Hay que usar SSL
+			prop.setProperty("mail.imap.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+			prop.setProperty("mail.imap.socketFactory.fallback", "false");
+			
+			prop.setProperty("mail.store.protocol", "imaps");
+
+			// Puerto 995 para conectarse.
+			prop.setProperty("mail.imap.port", "993");
+			prop.setProperty("mail.imap.socketFactory.port", "993");
+
+			Session sesion = Session.getInstance(prop);
+
+			store = sesion.getStore("imaps");
+
+			store.connect("pop.gmail.com", user, pass);
+			folder = store.getFolder("INBOX");
+			folder.open(Folder.READ_WRITE);
+			System.out.println(folder.getMessageCount());
+		} catch (NoSuchProviderException e) {
+			System.err.println(e.getMessage());
+		} catch (MessagingException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}*/
+	
+	public void cerrarConexion() {
+		try {
+			store.close();
+			folder.close(true);
+		} catch (MessagingException e) {
+			System.err.println(e.getMessage());
+		}
+	}
+
+	public static Folder getFolder() {
+		return folder;
+	}
+
+	public void setFolder(Folder folder) {
+		this.folder = folder;
+	}
+
+	public static String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public static String getPass() {
+		return pass;
+	}
+
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+	
 }

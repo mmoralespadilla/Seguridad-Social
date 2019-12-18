@@ -33,13 +33,13 @@ public class Main {
 		String user = "iamsegsoctrustme@gmail.com";
 		String pass = "segsoc123";
 		MenuCorreo conmail = new MenuCorreo(user, pass);
-		Folder folder = conmail.conectar();
-		ListadoMensajes listmessages = new ListadoMensajes(folder);
-		listmessages.listarMensajes();
+//		Folder folder = conmail.conectar();
+//		ListadoMensajes listmessages = new ListadoMensajes(folder);
+//		listmessages.listarMensajes();
 		JEditorPane panelMensaje = new JEditorPane();
 		panelMensaje.setContentType("text/html");
-		MuestraMensaje verMensaje = new MuestraMensaje(folder, 58/*Mete por parámetro la posición del mensaje que quieres abrir (empieza en el 1)*/);
-		panelMensaje.setText(verMensaje.mostrarMensaje());
+//		MuestraMensaje verMensaje = new MuestraMensaje(folder, 58/*Mete por parámetro la posición del mensaje que quieres abrir (empieza en el 1)*/);
+//		panelMensaje.setText(verMensaje.mostrarMensaje());
 		panelMensaje.setEditable(false);
 		JScrollPane scrollPane = new JScrollPane(panelMensaje);
 		ventana.add(scrollPane);

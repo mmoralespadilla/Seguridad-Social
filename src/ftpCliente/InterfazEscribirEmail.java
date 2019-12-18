@@ -4,6 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -11,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
@@ -20,6 +25,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+import java.sql.Connection;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -31,15 +39,17 @@ public class InterfazEscribirEmail extends JFrame {
 
 	private JPanel contentPane;
 	private DefaultTableModel dtm;
-	private JTable table;
-	private JTextField textFieldPara;
+	private static JTextArea areaTexto;
+	private static JTextField textFieldPara;
+	private static JTextField textFieldAsunto;
 	private static ModeloTextoInterfaz modeloTexto;
 	private static CreadorInterfaz creacion;
-	private JComboBox listaAdjuntos;
-	private JComboBox listaContactos;
-
+	private static JComboBox listaAdjuntos;
+	private static JComboBox listaContactos;
+	private static ArrayList<String> emails = new ArrayList<>();
 	
 
+	
 	/**
 	 * Launch the application.
 	 */
@@ -101,11 +111,32 @@ public class InterfazEscribirEmail extends JFrame {
 		//From area
 		listaContactos = new JComboBox();
 		listaContactos.setBounds(615, 20, 160, 30);
+		Connection con;
+		ResultSet resultado;
+		try {
+		if(ConexionMysql.iniciarConexion()){
+				Class.forName("com.mysql.jdbc.Driver");
+				con = DriverManager.getConnection("jdbc:mysql://localhost/" + "segsoc", "root", "");
+				Statement consulta = con.createStatement();
+				resultado = consulta.executeQuery("select usuario, email from usuarios");
+				while(resultado.next()){
+					listaContactos.addItem(resultado.getString(1));
+					emails.add(resultado.getString(2));
+				}
+				listaContactos.addActionListener(new ControladorBotonesCorreo());
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		contentPane.add(listaContactos);
 		JLabel lblDestinatario = new JLabel(modeloTexto.getCabeceraPara());
 		lblDestinatario.setBounds(50, 20, 150, 30);
 		lblDestinatario.setFont(fuenteTitulo);
-		contentPane.add(lblDestinatario);		
+		contentPane.add(lblDestinatario);
 		textFieldPara = new JTextField();
 		textFieldPara.setBounds(140, 20, 470, 30);
 		contentPane.add(textFieldPara);
@@ -117,9 +148,9 @@ public class InterfazEscribirEmail extends JFrame {
 		lblAsunto.setBounds(50, 55, 150, 30);
 		lblAsunto.setFont(fuenteTitulo);
 		contentPane.add(lblAsunto);		
-		textFieldPara = new JTextField();
-		textFieldPara.setBounds(140, 55, 470, 30);
-		contentPane.add(textFieldPara);
+		textFieldAsunto = new JTextField();
+		textFieldAsunto.setBounds(140, 55, 470, 30);
+		contentPane.add(textFieldAsunto);
 		
 				
 		
@@ -138,20 +169,8 @@ public class InterfazEscribirEmail extends JFrame {
 
 		//FALTA METER ASUNTO , SE PUEDE EN CELDA?????
 		dtm = new DefaultTableModel();
-		table = new JTable(dtm) {
-			public boolean isCellEditable(int rowIndex, int vColIndex) {
-				return false;
-			}
-		};
-		table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		// Cabeceras de la tabla
-		dtm.addColumn(modeloTexto.getCabeceraContenido());
-		table.setSelectionMode(0);
-		// Editor de celdas para centrar los datos
-		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
-		tcr.setHorizontalAlignment(SwingConstants.CENTER);
-		table.getColumnModel().getColumn(0).setCellRenderer(tcr);
-		scrollPane.setViewportView(table);
+		areaTexto = new JTextArea();
+		scrollPane.setViewportView(areaTexto);
 		scrollPane.getViewport().setBackground(Color.WHITE);
 	}
 
@@ -169,4 +188,52 @@ public class InterfazEscribirEmail extends JFrame {
 		return titulosMenuItemAcciones;
 	}
 
+	public static JTextArea getAreaTexto() {
+		return areaTexto;
+	}
+
+	public void setAreaTexto(JTextArea areaTexto) {
+		this.areaTexto = areaTexto;
+	}
+
+	public static JTextField getTextFieldPara() {
+		return textFieldPara;
+	}
+
+	public static void setTextFieldPara(String texto) {
+		InterfazEscribirEmail.textFieldPara.setText(texto);
+	}
+	
+	public static JTextField getTextFieldAsunto() {
+		return textFieldAsunto;
+	}
+
+	public void setTextFieldAsunto(JTextField textFieldAsunto) {
+		this.textFieldAsunto = textFieldAsunto;
+	}
+
+	public static JComboBox getListaAdjuntos() {
+		return listaAdjuntos;
+	}
+
+	public void setListaAdjuntos(JComboBox listaAdjuntos) {
+		this.listaAdjuntos = listaAdjuntos;
+	}
+
+	public static JComboBox getListaContactos() {
+		return listaContactos;
+	}
+
+	public static void setListaContactos(JComboBox listaContactos) {
+		InterfazEscribirEmail.listaContactos = listaContactos;
+	}
+
+	public static ArrayList<String> getEmails() {
+		return emails;
+	}
+
+	public static void setEmails(ArrayList<String> emails) {
+		InterfazEscribirEmail.emails = emails;
+	}
+	
 }

@@ -25,10 +25,10 @@ public class Main {
 		paths.add(System.getProperty("user.home") + "/Desktop/AndroidManifest.xml");
 		paths.add(System.getProperty("user.home") + "/Desktop/gato felis.jpg");
 		
-		ConexionCorreo connectMail = new ConexionCorreo(fromEmail, pass);
-		Session sesion = connectMail.conectar();
-		EnvioMensaje sentMsg = new EnvioMensaje(sesion, toEmail, fromEmail, header, body, paths);
-		sentMsg.enviarMensaje();
+		//EnvioCorreo connectMail = new EnvioCorreo(fromEmail, pass);
+		//Session sesion = connectMail.conectar();
+		//EnvioMensaje sentMsg = new EnvioMensaje(sesion, toEmail, fromEmail, header, body, paths);
+		//sentMsg.enviarMensaje();
 		
 	        //EmailUtil.sendEmail(session, toEmail,"SSLEmail Testing Subject", "SSLEmail Testing Body");
 

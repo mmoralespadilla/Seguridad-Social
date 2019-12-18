@@ -21,7 +21,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import recibocorreo.MenuCorreo;
-import recibocorreo.ListadoMensajes;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -34,6 +33,8 @@ import javax.swing.JEditorPane;
 
 public class InterfazEmail extends JFrame {
 
+	private static String user = "iamsegsoctrustme@gmail.com";
+	private static String pass = "segsoc123";
 	private JPanel contentPane;
 	private static DefaultTableModel dtm;
 	private static JTable table;
@@ -162,12 +163,9 @@ public class InterfazEmail extends JFrame {
 	public static void recargarTabla() {
 		vaciarTabla();
 		try {
-			String user = "iamsegsoctrustme@gmail.com";
-			String pass = "segsoc123";
-			recibocorreo.MenuCorreo conexion = new MenuCorreo(user, pass);
-			Folder folder = conexion.conectar();
-			recibocorreo.ListadoMensajes listMensajes = new ListadoMensajes(folder);
-			Message[] mensajes = recibocorreo.ListadoMensajes.listarMensajes();
+			recibocorreo.MenuCorreo menuCorreo = new MenuCorreo(user, pass);
+			menuCorreo.conectar();
+			Message[] mensajes = menuCorreo.listarMensajes();
 			for(int i = mensajes.length - 1; i >= 0; i--) {
 				Object[] row = {mensajes[i].getFrom()[0].toString(), mensajes[i].getSubject()};
 				dtm.addRow(row);
@@ -176,4 +174,31 @@ public class InterfazEmail extends JFrame {
 			System.err.println(me.getMessage());
 		}
 	}
+
+	public static JTable getTable() {
+		return table;
+	}
+
+	public static void setTable(JTable table) {
+		InterfazEmail.table = table;
+	}
+
+	public static String getUser() {
+		return user;
+	}
+
+	public static void setUser(String user) {
+		InterfazEmail.user = user;
+	}
+
+	public static String getPass() {
+		return pass;
+	}
+
+	public static void setPass(String pass) {
+		InterfazEmail.pass = pass;
+	}
+	
+	
+	
 }
