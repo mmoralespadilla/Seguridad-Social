@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
@@ -49,11 +48,11 @@ public class ConexionMysql {
 	 * Metodo para comprobar el login de un usuario con la base de datos
 	 * 
 	 * @param usuario String - Nombre del usuario
-	 * @param contraseña String - Contraseña del usuario
+	 * @param contraseï¿½a String - Contraseï¿½a del usuario
 	 * @param ftp 
-	 * @return int - 0 Si se logeo un funcionario; 1 Si se logeo un empresario; -1 El usuario no existe; -2 La contraseña no es correcta; -3 Fallo en la conexion
+	 * @return int - 0 Si se logeo un funcionario; 1 Si se logeo un empresario; -1 El usuario no existe; -2 La contraseÃ±a no es correcta; -3 Fallo en la conexion
 	 */
-	public static int comprobarLogin(String usuario, String contraseña, ControladorFtp ftp) {
+	public static int comprobarLogin(String usuario, String contraseÃ±a, ControladorFtp ftp) {
 		int tipoLogin = -3;
 		if (iniciarConexion()) {
 			String query = "select * from usuarios where usuario = '" + usuario + "'";
@@ -62,9 +61,9 @@ public class ConexionMysql {
 				ResultSet rs = st.executeQuery(query);
 				if (rs.next()) {
 					String usuarioBuscado = rs.getString(1);
-					String contraseñaBuscada = rs.getString(2);
+					String contraseÃ±aBuscada = rs.getString(2);
 					String emailBuscado = rs.getString(4);
-					if (contraseñaBuscada.equals(contraseña)) {
+					if (contraseÃ±aBuscada.equals(contraseÃ±a)) {
 						ftp.setEmail(emailBuscado);
 						tipoLogin = rs.getInt(5);
 					} else {

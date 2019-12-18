@@ -1,6 +1,5 @@
 package ftpCliente;
 
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -105,7 +104,7 @@ public class ControladorBotonesFtp implements ActionListener {
 					System.out.println("No has introducido nombre del fichero");
 				}
 			} catch (NullPointerException e1) {
-				System.out.println("Acción cancelada");
+				System.out.println("Acciï¿½n cancelada");
 			}
 		//El boton pulsado es eliminar
 		} else if (boton.equals(textos.getTituloEliminar())) {
@@ -125,7 +124,7 @@ public class ControladorBotonesFtp implements ActionListener {
 
 				}
 			} catch (NullPointerException e1) {
-				System.out.println("Acción cancelada");
+				System.out.println("Acciï¿½n cancelada");
 			}
 		//El boton pulsado es cambiar nombre
 		} else if (boton.equals(textos.getTituloCambiarNombre())) {

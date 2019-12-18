@@ -108,22 +108,14 @@ public class InterfazLogin extends JDialog {
 				ControladorFtp ftp = new ControladorFtp("localhost",usuario, password);
 				int comprobarLogin = ConexionMysql.comprobarLogin(usuario, password, ftp);
 				if (comprobarLogin >= 0) {
-					try {
-						if(ftp.init()) {
-							try {
-								InterfazFtp frame = new InterfazFtp(ftp);
-								dispose();
-								frame.setVisible(true);
-							} catch (Exception c) {
-								c.printStackTrace();
-							}
+					if(ftp.init()) {
+						try {
+							InterfazFtp frame = new InterfazFtp(ftp);
+							dispose();
+							frame.setVisible(true);
+						} catch (Exception c) {
+							c.printStackTrace();
 						}
-					} catch (SocketException a) {
-						// TODO Auto-generated catch block
-						a.printStackTrace();
-					} catch (IOException b) {
-						// TODO Auto-generated catch block
-						b.printStackTrace();
 					}
 				} else if (comprobarLogin == -2){
 					JOptionPane.showMessageDialog(null, "Contraseña incorrecta");

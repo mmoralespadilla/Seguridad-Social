@@ -16,6 +16,14 @@ import javax.swing.JOptionPane;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
+/**
+ * 
+ * Clase que implemente los servicios del FTP.
+ * 
+ * 
+ * @author Miguel Morales Padilla
+ *
+ */
 public class ControladorFtp {
 	private FTPClient cliente = new FTPClient();
 	private String user = "user", pass = "";
@@ -24,7 +32,16 @@ public class ControladorFtp {
 	private FTPFile[] ficheros;
 	private ArrayList<String> rutas;
 	private int posicion;
-	
+
+	/**
+	 * Constructor que recibe los datos del cliente que se va a logear en el FTP
+	 * 
+	 * @param host    String - Nombre del host al que se va a conectar el cliente
+	 * @param usuario String - Nombre de usuario con el que se va a logear el
+	 *                cliente
+	 * @param pass    String - Password que utiliza el cliente para acceder al
+	 *                usuario
+	 */
 	public ControladorFtp(String host, String usuario, String pass) {
 		this.host = host;
 		this.user = usuario;
@@ -34,15 +51,37 @@ public class ControladorFtp {
 		rutas.add("/");
 	}
 
-	public boolean init() throws SocketException, IOException {
+	/**
+	 * Método que inicializa al cliente en el FileZilla
+	 * 
+	 * @return Boolean - True si se realiza la conexión correctamente; False si hay
+	 *         algun error con la conexión
+	 * 
+	 */
+	public boolean init() {
 		boolean conectado = false;
-		cliente.connect(host, 21);
-		conectado = cliente.login(user, pass);
-		ficheros = cliente.listFiles();
-		cliente.enterLocalPassiveMode();
+		try {
+			cliente.connect(host, 21);
+			conectado = cliente.login(user, pass);
+			ficheros = cliente.listFiles();
+			cliente.enterLocalPassiveMode();
+			cliente.setFileType(FTPClient.BINARY_FILE_TYPE);
+		} catch (SocketException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return conectado;
 	}
 
+	/**
+	 * Método que implementa el servicio para subir Ficheros al FTP
+	 * 
+	 * @param archivo String - Archivo que se va a subir al FTP
+	 * @param nombre  String - Nombre que va adoptar el archivo que se ha subido al
+	 *                FTP
+	 * @return boolean True si se sube correctamente; False si hay algun error
+	 */
 	public boolean subir(String archivo, String nombre) {
 		BufferedInputStream in;
 		boolean subido = false;
@@ -60,11 +99,16 @@ public class ControladorFtp {
 		}
 		return subido;
 	}
-	
+
+	/**
+	 * Método que crea carpetas en el FTP
+	 * 
+	 * @param nombreCarpeta String - Nombre de la carpeta que se va a crear
+	 */
 	public void crearCarpeta(String nombreCarpeta) {
 		try {
 			if (cliente.makeDirectory(nombreCarpeta)) {
-				ConexionMysql.insertarMovimiento(user, "Crear carpeta", "Carpeta "+nombreCarpeta+" creada");
+				ConexionMysql.insertarMovimiento(user, "Crear carpeta", "Carpeta " + nombreCarpeta + " creada");
 				System.out.println("Carpeta creada");
 			} else {
 				System.out.println("ERROR AL CREAR CARPETA.");
@@ -74,6 +118,11 @@ public class ControladorFtp {
 		}
 	}
 
+	/**
+	 * Metodo que borra un archivo en el FTP
+	 * 
+	 * @param nombreCarpeta String - Nombre del archivo que va a ser borrado.
+	 */
 	public void borrarCarpeta(String nombreCarpeta) {
 		try {
 			FTPFile f = cliente.mlistFile(nombreCarpeta);
@@ -98,16 +147,28 @@ public class ControladorFtp {
 		}
 	}
 
+	/**
+	 * Metodo que renombra un archivo del FTP
+	 * 
+	 * @param nombreAntiguo String - Nombre Antigua del archivo
+	 * @param nombreNuevo   String - Nombre Nuevo del archivo
+	 */
 	public void renombrar(String nombreAntiguo, String nombreNuevo) {
 		try {
 			cliente.rename(nombreAntiguo, nombreNuevo);
-			ConexionMysql.insertarMovimiento(user, "Renombrar", "Archivo " + nombreAntiguo + " renombrado a "+nombreNuevo);
+			ConexionMysql.insertarMovimiento(user, "Renombrar",
+					"Archivo " + nombreAntiguo + " renombrado a " + nombreNuevo);
 		} catch (IOException e) {
 			System.out.println("ERROR E/S");
 			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * Método que crea un fichero en el FTP
+	 * 
+	 * @param fichero String - Nombre que va adoptar el fichero creado.
+	 */
 	public void crearFichero(String fichero) {
 		File fi = new File(fichero);
 		try {
@@ -116,9 +177,9 @@ public class ControladorFtp {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		try (FileInputStream FicheroNuevo = new FileInputStream(fi);){
+		try (FileInputStream FicheroNuevo = new FileInputStream(fi);) {
 			cliente.storeFile(fichero, FicheroNuevo);
-			ConexionMysql.insertarMovimiento(user, "Crear fichero", "Fichero "+fichero+ " creado");
+			ConexionMysql.insertarMovimiento(user, "Crear fichero", "Fichero " + fichero + " creado");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -128,17 +189,18 @@ public class ControladorFtp {
 		}
 		fi.delete();
 	}
-	
+
+	/**
+	 * Metodo que descargar ficheros del FTP
+	 * 
+	 * @param nombre String - Nombre del fichero
+	 * @param elegir String - Directorio en donde se va a guardar el fichero a
+	 *               descargar.
+	 */
 	public void descargar(String nombre, JFileChooser elegir) {
 		File fileDescargar;
 		String archivoDirDestino = "";
 		String dirDest = "";
-		try {
-			cliente.setFileType(FTPClient.BINARY_FILE_TYPE);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		elegir.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		int returnF = elegir.showDialog(null, "Descargar..");
 		if (returnF == JFileChooser.APPROVE_OPTION) {
@@ -151,10 +213,10 @@ public class ControladorFtp {
 				BufferedOutputStream salida = new BufferedOutputStream(new FileOutputStream(archivoDirDestino));
 				salida.close();
 				if (cliente.retrieveFile(nombre, salida)) {
-					System.out.println(ConexionMysql.insertarMovimiento(user, "Descargar", "Fichero "+nombre+" descargado"));
+					System.out.println(
+							ConexionMysql.insertarMovimiento(user, "Descargar", "Fichero " + nombre + " descargado"));
 					JOptionPane.showMessageDialog(null, nombre + "=> Se ha descargado correctamente...");
-				}
-				else {
+				} else {
 					JOptionPane.showMessageDialog(null, nombre + "=> No se ha podido descargar...");
 				}
 			} catch (Exception e) {
@@ -219,19 +281,20 @@ public class ControladorFtp {
 		this.rutas = rutas;
 	}
 
-	
 	public int getPosicion() {
 		return posicion;
 	}
-	
+
 	public void incrementarPosicion() {
 		this.posicion++;
 	}
+
 	public void decrementarPosicion() {
 		this.posicion--;
 	}
+
 	public void setPosicion(int posicion) {
 		this.posicion = posicion;
 	}
-	
+
 }
