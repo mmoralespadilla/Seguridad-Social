@@ -4,7 +4,7 @@ public class ModeloTextoInterfaz {
 	
 	private String tituloLogin = "Login";
 	private String tituloUsuario = "Usuario";
-	private String tituloContrasena = "Contrase\u00F1a";
+	private String tituloContrasena = "Contrasenia";
 	private String tituloArchivo = "Archivo";
 	private String tituloCambiarUsuario= "Cambiar usuario";
 	private String tituloTransferencia = "Transferencia";

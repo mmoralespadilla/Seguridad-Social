@@ -50,10 +50,10 @@ public class ConexionMysql {
 	 * 
 	 * @param usuario String - Nombre del usuario
 	 * @param contraseña String - Contraseña del usuario
-	 * @param ftp 
+	 * @param ftp ControladorFtp - Controlador con los metodos y datos del ftp
 	 * @return int - 0 Si se logeo un funcionario; 1 Si se logeo un empresario; -1 El usuario no existe; -2 La contraseña no es correcta; -3 Fallo en la conexion
 	 */
-	public static int comprobarLogin(String usuario, String contraseña, ControladorFtp ftp) {
+	public static int comprobarLogin(String usuario, String contrasenia, ControladorFtp ftp) {
 		int tipoLogin = -3;
 		if (iniciarConexion()) {
 			String query = "select * from usuarios where usuario = '" + usuario + "'";
@@ -62,9 +62,9 @@ public class ConexionMysql {
 				ResultSet rs = st.executeQuery(query);
 				if (rs.next()) {
 					String usuarioBuscado = rs.getString(1);
-					String contraseñaBuscada = rs.getString(2);
+					String contraseniaBuscada = rs.getString(2);
 					String emailBuscado = rs.getString(4);
-					if (contraseñaBuscada.equals(contraseña)) {
+					if (contraseniaBuscada.equals(contrasenia)) {
 						ftp.setEmail(emailBuscado);
 						tipoLogin = rs.getInt(5);
 					} else {
