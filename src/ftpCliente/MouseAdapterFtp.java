@@ -42,11 +42,11 @@ public class MouseAdapterFtp implements MouseListener {
 		if (e.getClickCount() == 2) {
 			ruta = (String) InterfazFtp.dtm.getValueAt(InterfazFtp.table.getSelectedRow(), 0);
 			try {
-				ruta = ftp.getRutas().get(InterfazFtp.posicionRuta) + "/" + ruta;
+				ruta = ftp.getRutas().get(ftp.getPosicion()) + "/" + ruta;
 				ftp.getCliente().changeWorkingDirectory(ruta);
 				if (!workSpaceActual.equals(ftp.getCliente().printWorkingDirectory())) {
 					ftp.getRutas().add(ruta);
-					InterfazFtp.posicionRuta++;
+					ftp.incrementarPosicion();;
 					lblRuta.setText("Ruta: " + ruta);
 				}
 			} catch (IOException e1) {

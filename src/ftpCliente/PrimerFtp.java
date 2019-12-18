@@ -23,12 +23,14 @@ public class PrimerFtp {
 	private String email;
 	private FTPFile[] ficheros;
 	private ArrayList<String> rutas;
+	private int posicion;
 	
 	public PrimerFtp(String host, String usuario, String pass, String email) {
 		this.host = host;
 		this.user = usuario;
 		this.pass = pass;
 		this.email = email;
+		posicion = 0;
 		rutas = new ArrayList<String>();
 		rutas.add("/");
 	}
@@ -217,4 +219,20 @@ public class PrimerFtp {
 	public void setRutas(ArrayList<String> rutas) {
 		this.rutas = rutas;
 	}
+
+	
+	public int getPosicion() {
+		return posicion;
+	}
+	
+	public void incrementarPosicion() {
+		this.posicion++;
+	}
+	public void decrementarPosicion() {
+		this.posicion--;
+	}
+	public void setPosicion(int posicion) {
+		this.posicion = posicion;
+	}
+	
 }

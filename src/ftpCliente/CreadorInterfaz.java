@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -16,12 +17,14 @@ import javax.swing.border.LineBorder;
 
 public class CreadorInterfaz {
 	private static PrimerFtp ftp;
-	private ControladorBotonesFtp controlBotones;
+	private ControladorBotonesFtp controlBotonesFtp;
 	private ControladorBotonesCorreo controlBotonesCorreo;
+	private JLabel lblRuta;
 
-	public CreadorInterfaz(PrimerFtp ftp) {
+	public CreadorInterfaz(PrimerFtp ftp, JLabel lblRuta) {
 		this.ftp = ftp;
-		controlBotones = new ControladorBotonesFtp(ftp);		
+		this.lblRuta = lblRuta;
+		controlBotonesFtp = new ControladorBotonesFtp(ftp, lblRuta);		
 	}
 	
 	public CreadorInterfaz() {
@@ -36,7 +39,7 @@ public class CreadorInterfaz {
 			if(tipoControl ==2) {
 				boton.addActionListener(controlBotonesCorreo);
 			}else {
-				boton.addActionListener(controlBotones);
+				boton.addActionListener(controlBotonesFtp);
 			}			
 			boton.setBounds(615, y, 160, 40);
 			y += 65;
@@ -48,7 +51,7 @@ public class CreadorInterfaz {
 	
 	public JButton elaborarBoton(String titulo, int x , int y, int anchura) {
 		JButton boton = new JButton(titulo);
-		boton.addActionListener(controlBotonesCorreo);
+		boton.addActionListener(controlBotonesFtp);
 		boton.setBounds(x, y, anchura, 30);	
 		ponerPropiedadesBoton(boton);
 	
@@ -73,7 +76,7 @@ public class CreadorInterfaz {
 	public void crearItems(ArrayList <String> titulos, JMenu menu ) {
 		for (int i = 0 ; i<titulos.size(); i++) {
 			JMenuItem mntmTransfer = new JMenuItem(titulos.get(i));
-			mntmTransfer.addActionListener(controlBotones);
+			mntmTransfer.addActionListener(controlBotonesFtp);
 			ponerPropiedadesMenuItem(mntmTransfer);
 			menu.add(mntmTransfer);
 		}		

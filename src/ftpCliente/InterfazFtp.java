@@ -43,15 +43,20 @@ public class InterfazFtp extends JFrame {
 	private static PrimerFtp ftp;
 	private static ModeloTextoInterfaz modeloTexto;
 	private static CreadorInterfaz creador;
+	private JLabel lblRuta;
 
 	/**
 	 * Create the frame.
 	 */
 	public InterfazFtp(PrimerFtp ftp) {
 		// Actulizar
-		this.ftp = ftp;
-		creador = new CreadorInterfaz(ftp);
+		Font fuenteTitulo = new Font("Dialog", Font.BOLD, 14);
 		modeloTexto = new ModeloTextoInterfaz();
+		this.ftp = ftp;
+		lblRuta = new JLabel(modeloTexto.getTituloRuta());
+		lblRuta.setBounds(50, 30, 515, 16);
+		lblRuta.setFont(fuenteTitulo);
+		creador = new CreadorInterfaz(ftp, lblRuta);
 		ArrayList<String> titulosMenuItemArchivo;
 		ArrayList<String> titulosMenuItemTransferencia;
 		ArrayList<String> titulosMenuItemServidor;
@@ -60,7 +65,7 @@ public class InterfazFtp extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 855, 547);
-		Font fuenteTitulo = new Font("Dialog", Font.BOLD, 14);
+		
 
 		// Menu
 		JMenuBar menuBar = new JMenuBar();
@@ -123,10 +128,7 @@ public class InterfazFtp extends JFrame {
 		creador.crearBotones(titulosMenuItemTransferencia, 60, contentPane, 1);
 
 		// Label
-		JLabel lblRuta = new JLabel(modeloTexto.getTituloRuta());
-		lblRuta.setBounds(50, 30, 515, 16);
-		lblRuta.setFont(fuenteTitulo);
-		contentPane.add(lblRuta);
+		
 
 		JLabel lblUsuario = new JLabel(modeloTexto.getTituloUsuario());
 		lblUsuario.setBounds(615, 30, 205, 16);
@@ -155,25 +157,9 @@ public class InterfazFtp extends JFrame {
 		scrollPane.setViewportView(table);
 
 		JButton btnAtras = creador.elaborarBoton(modeloTexto.getTituloBotonAtras(), 460, 20, 105);
-		btnAtras.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String ruta = "";
-				if (posicionRuta >= 1) {
-					posicionRuta--;
-					try {
-						ftp.getCliente().changeWorkingDirectory(ftp.getRutas().get(posicionRuta));
-						ruta = ftp.getCliente().printWorkingDirectory();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					lblRuta.setText("Ruta: " + ruta);
-					recargarTabla();
-				}
-			}
-		});
 		lblUsuario.setText("Usuario: " + ftp.getUser());
 		contentPane.add(btnAtras);
+		contentPane.add(lblRuta);
 		recargarTabla();
 	}
 
@@ -235,7 +221,4 @@ public class InterfazFtp extends JFrame {
 		}
 	}
 
-	private void cerrarVentana() {
-		
-	}
 }
