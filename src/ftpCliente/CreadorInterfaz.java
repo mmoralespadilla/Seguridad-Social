@@ -16,12 +16,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 public class CreadorInterfaz {
-	private static PrimerFtp ftp;
+	private static ControladorFtp ftp;
 	private ControladorBotonesFtp controlBotonesFtp;
 	private ControladorBotonesCorreo controlBotonesCorreo;
 	private JLabel lblRuta;
 
-	public CreadorInterfaz(PrimerFtp ftp, JLabel lblRuta) {
+	public CreadorInterfaz(ControladorFtp ftp, JLabel lblRuta) {
 		this.ftp = ftp;
 		this.lblRuta = lblRuta;
 		controlBotonesFtp = new ControladorBotonesFtp(ftp, lblRuta);		

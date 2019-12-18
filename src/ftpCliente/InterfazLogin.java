@@ -108,7 +108,7 @@ public class InterfazLogin extends JDialog {
 				int comprobarLogin = ConexionMysql.comprobarLogin(usuario, password);
 				if (comprobarLogin >= 0) {
 					String email = ConexionMysql.email;
-					PrimerFtp ftp = new PrimerFtp("localhost",usuario, password, email);
+					ControladorFtp ftp = new ControladorFtp("localhost",usuario, password, email);
 					try {
 						if(ftp.init()) {
 							try {
@@ -127,9 +127,9 @@ public class InterfazLogin extends JDialog {
 						b.printStackTrace();
 					}
 				} else if (comprobarLogin == -2){
-					JOptionPane.showMessageDialog(null, "NO EXISTE CONTRASEÑA");
+					JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
 				} else if (comprobarLogin == -1 ) {
-					JOptionPane.showMessageDialog(null, "NO EXISTE USUARIO");
+					JOptionPane.showMessageDialog(null, "Usuario no existe");
 				}
 			}
 		});

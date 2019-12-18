@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
-public class PrimerFtp {
+public class ControladorFtp {
 	private FTPClient cliente = new FTPClient();
 	private String user = "user", pass = "";
 	private String host;
@@ -25,7 +25,7 @@ public class PrimerFtp {
 	private ArrayList<String> rutas;
 	private int posicion;
 	
-	public PrimerFtp(String host, String usuario, String pass, String email) {
+	public ControladorFtp(String host, String usuario, String pass, String email) {
 		this.host = host;
 		this.user = usuario;
 		this.pass = pass;

@@ -10,20 +10,41 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+/**
+ * Clase que implementa ActionListener para hacer el controlador de los botones
+ * de la interfaz FTP
+ * 
+ * @author AlvaroFernandez
+ *
+ */
 public class ControladorBotonesFtp implements ActionListener {
-	private PrimerFtp ftp;
+	private ControladorFtp ftp;
 	private ModeloTextoInterfaz textos;
 	private JLabel lblRuta;
 
-	
-	
-	public ControladorBotonesFtp(PrimerFtp ftp) {
+	/**
+	 * Constructor que recibe nuestro controlador FTP
+	 * 
+	 * @param ftp ControladorFtp - Controlador que contendra los datos del usuario
+	 *            logeado, y multiples metodos para controlar las acciones
+	 *            realizadas
+	 */
+	public ControladorBotonesFtp(ControladorFtp ftp) {
 		super();
 		this.ftp = ftp;
 		textos = new ModeloTextoInterfaz();
 	}
 
-	public ControladorBotonesFtp(PrimerFtp ftp, JLabel lblRuta) {
+	/**
+	 * Constructor que recibe nuestro controlador FTP
+	 * 
+	 * @param ftp     ControladorFtp - Controlador que contendra los datos del
+	 *                usuario logeado, y multiples metodos para controlar las
+	 *                acciones realizadas
+	 * @param lblRuta JLabel - JLabel donde se ira actualizando la ruta cuando se
+	 *                vaya moviendo el usuario
+	 */
+	public ControladorBotonesFtp(ControladorFtp ftp, JLabel lblRuta) {
 		super();
 		this.ftp = ftp;
 		this.lblRuta = lblRuta;
@@ -32,37 +53,38 @@ public class ControladorBotonesFtp implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		//Comentario para subir
 		String nomFichero = "";
 		String ruta = "";
 		String archivo;
 		String boton = e.getActionCommand();
-		if(boton.equals(textos.getTituloSubirFichero())){
+		// El boton pulsado es subir fichero
+		if (boton.equals(textos.getTituloSubirFichero())) {
 			try {
 				int numeroFicheros = 0;
 				JFileChooser cargar = new JFileChooser();
 				cargar.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 				cargar.setMultiSelectionEnabled(true);
 				cargar.showOpenDialog(null); // panel indicando que archivo cargaremos
-				
+
 				File[] ficheros = cargar.getSelectedFiles();
 				for (int i = 0; i < ficheros.length; i++) {
 					if (ftp.subir(ficheros[i].getAbsolutePath(), ficheros[i].getName())) {
 						numeroFicheros++;
 					}
 				}
-				if(numeroFicheros == 1) {
+				if (numeroFicheros == 1) {
 					JOptionPane.showMessageDialog(null, "Archivo subido con ï¿½xito");
-				}else if(numeroFicheros >1) {
+				} else if (numeroFicheros > 1) {
 					JOptionPane.showMessageDialog(null, "Archivos subidos con ï¿½xito");
-				}else {
+				} else {
 					JOptionPane.showMessageDialog(null, "Error al subir archivo");
 				}
 			} catch (NullPointerException e1) {
 				System.out.println("No has seleccionado un fichero");
 			}
 		}
-		else if(boton.equals(textos.getTituloDescargarFichero())) {
+		// El boton pulsado es descargar fichero
+		else if (boton.equals(textos.getTituloDescargarFichero())) {
 			try {
 				JFileChooser elegir = new JFileChooser();
 				archivo = (String) InterfazFtp.dtm.getValueAt(InterfazFtp.table.getSelectedRow(), 0);
@@ -71,50 +93,53 @@ public class ControladorBotonesFtp implements ActionListener {
 				System.out.println("No has seleccionado un directorio");
 			} catch (ArrayIndexOutOfBoundsException a1) {
 				System.out.println("No has seleccionado un fichero de la tabla");
-			} 
+			}
 		}
+		// El boton pulsado es crear fichero
 		else if (boton.equals(textos.getTituloCrearFichero())) {
+			try {
 				try {
-					try {
-						nomFichero = JOptionPane.showInputDialog("Nombre del fichero");
-						ftp.crearFichero(nomFichero);
-					} catch (NullPointerException e2) {
-						System.out.println("No has introducido nombre del fichero");
-					}
-				} catch (NullPointerException e1) {
-					System.out.println("Acción cancelada");
-				} 
+					nomFichero = JOptionPane.showInputDialog("Nombre del fichero");
+					ftp.crearFichero(nomFichero);
+				} catch (NullPointerException e2) {
+					System.out.println("No has introducido nombre del fichero");
+				}
+			} catch (NullPointerException e1) {
+				System.out.println("Acción cancelada");
 			}
-		else if (boton.equals(textos.getTituloEliminar())) {
-				try {
-					archivo = (String) InterfazFtp.dtm.getValueAt(InterfazFtp.table.getSelectedRow(), 0);
-					ftp.borrarCarpeta(archivo);
-				} catch (ArrayIndexOutOfBoundsException e1) {
-					System.out.println("Selecciona un elemento de la tabla");
-				} 
+		//El boton pulsado es eliminar
+		} else if (boton.equals(textos.getTituloEliminar())) {
+			try {
+				archivo = (String) InterfazFtp.dtm.getValueAt(InterfazFtp.table.getSelectedRow(), 0);
+				ftp.borrarCarpeta(archivo);
+			} catch (ArrayIndexOutOfBoundsException e1) {
+				System.out.println("Selecciona un elemento de la tabla");
 			}
-		else if (boton.equals(textos.getTituloCrearCarpeta())) {
-				try {
-					nomFichero = JOptionPane.showInputDialog("Nombre de la carpeta");
-					if (nomFichero.length() != 0) {
-						ftp.crearCarpeta(nomFichero);
-					} else {
+		//El boton pulsado es crear carpeta
+		} else if (boton.equals(textos.getTituloCrearCarpeta())) {
+			try {
+				nomFichero = JOptionPane.showInputDialog("Nombre de la carpeta");
+				if (nomFichero.length() != 0) {
+					ftp.crearCarpeta(nomFichero);
+				} else {
 
-					}
-				} catch (NullPointerException e1) {
-					System.out.println("Acción cancelada");
-				} 
+				}
+			} catch (NullPointerException e1) {
+				System.out.println("Acción cancelada");
 			}
-		else if(boton.equals(textos.getTituloCambiarNombre())) {
+		//El boton pulsado es cambiar nombre
+		} else if (boton.equals(textos.getTituloCambiarNombre())) {
 			archivo = (String) InterfazFtp.dtm.getValueAt(InterfazFtp.table.getSelectedRow(), 0);
 			nomFichero = JOptionPane.showInputDialog("Nombre nuevo");
 			ftp.renombrar(archivo, nomFichero);
-		}else if(boton.equals(textos.getTituloCorreoAbrir())) {
-			
-			InterfazEmail email = new InterfazEmail(ftp.getUser(),ftp.getPass());
+		//El boton pulsado es abrir correo
+		} else if (boton.equals(textos.getTituloCorreoAbrir())) {
+
+			InterfazEmail email = new InterfazEmail(ftp.getUser(), ftp.getPass());
 			email.setModal(true);
 			email.setEnabled(true);
-		}else if(boton.equals(textos.getTituloBotonAtras())) {
+		//El boton pulsado es atras
+		} else if (boton.equals(textos.getTituloBotonAtras())) {
 			ruta = "";
 			System.out.println(ftp.getPosicion());
 			if (ftp.getPosicion() >= 1) {
@@ -133,5 +158,3 @@ public class ControladorBotonesFtp implements ActionListener {
 		InterfazFtp.recargarTabla();
 	}
 }
-		
-	

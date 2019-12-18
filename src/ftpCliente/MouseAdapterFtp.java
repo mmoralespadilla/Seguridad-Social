@@ -10,10 +10,10 @@ import org.apache.commons.net.ftp.FTPClient;
 
 public class MouseAdapterFtp implements MouseListener {
 
-	private PrimerFtp ftp;
+	private ControladorFtp ftp;
 	private JLabel lblRuta;
 
-	public MouseAdapterFtp(PrimerFtp ftp, JLabel lblRuta) {
+	public MouseAdapterFtp(ControladorFtp ftp, JLabel lblRuta) {
 		this.ftp = ftp;
 		this.lblRuta = lblRuta;
 	}
@@ -46,7 +46,7 @@ public class MouseAdapterFtp implements MouseListener {
 				ftp.getCliente().changeWorkingDirectory(ruta);
 				if (!workSpaceActual.equals(ftp.getCliente().printWorkingDirectory())) {
 					ftp.getRutas().add(ruta);
-					ftp.incrementarPosicion();;
+					ftp.incrementarPosicion();
 					lblRuta.setText("Ruta: " + ruta);
 				}
 			} catch (IOException e1) {
@@ -55,7 +55,6 @@ public class MouseAdapterFtp implements MouseListener {
 			}
 			InterfazFtp.recargarTabla();
 		}
-		
 	}
 
 	@Override

@@ -37,10 +37,9 @@ import java.awt.event.ActionEvent;
 public class InterfazFtp extends JFrame {
 
 	private JPanel contentPane;
-	public static int posicionRuta = 0;
 	public static DefaultTableModel dtm;
 	public static JTable table;
-	private static PrimerFtp ftp;
+	private static ControladorFtp ftp;
 	private static ModeloTextoInterfaz modeloTexto;
 	private static CreadorInterfaz creador;
 	private JLabel lblRuta;
@@ -48,7 +47,7 @@ public class InterfazFtp extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InterfazFtp(PrimerFtp ftp) {
+	public InterfazFtp(ControladorFtp ftp) {
 		// Actulizar
 		Font fuenteTitulo = new Font("Dialog", Font.BOLD, 14);
 		modeloTexto = new ModeloTextoInterfaz();

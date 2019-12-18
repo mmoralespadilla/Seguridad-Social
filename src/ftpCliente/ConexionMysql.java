@@ -11,10 +11,21 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+/**
+ * Clase controladora de solicitudes a la Base de datos MySql
+ * 
+ * @author AlvaroFernandez
+ *
+ */
 public class ConexionMysql {
 	private static Connection con;
 	public static String email;
+	private final static String BASEDATOS = "segsoc";
 
+	/**
+	 * Metodo para iniciar la conexion con la base de datos
+	 * @return boolean - True si la conexion es valida; False si no
+	 */
 	public static boolean iniciarConexion() {
 		boolean cargada = false;
 		try {
@@ -24,7 +35,7 @@ public class ConexionMysql {
 			System.out.println("com.mysql.jdbc.Driver");
 		}
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost/" + "segsoc", "root", "");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/" + BASEDATOS, "root", "");
 			System.out.println("Conexion sql realizada");
 			cargada = true;
 		} catch (SQLException sqle) {
@@ -35,6 +46,13 @@ public class ConexionMysql {
 		return cargada;
 	}
 
+	/**
+	 * Metodo para comprobar el login de un usuario con la base de datos
+	 * 
+	 * @param usuario String - Nombre del usuario
+	 * @param contraseña String - Contraseña del usuario
+	 * @return int - 0 Si se logeo un funcionario; 1 Si se logeo un empresario; -1 El usuario no existe; -2 La contraseña no es correcta; -3 Fallo en la conexion
+	 */
 	public static int comprobarLogin(String usuario, String contraseña) {
 		int tipoLogin = -3;
 		if (iniciarConexion()) {
@@ -64,6 +82,14 @@ public class ConexionMysql {
 		return tipoLogin;
 	}
 
+	/**
+	 * Metodo para insertar en la tabla movimientos cada accion que se realice en el servidor ftp
+	 * 
+	 * @param usuario String - Nombre del usuario
+	 * @param operacion String - Nombre de la operacion
+	 * @param descripcion String - Texto descriptivo de la operacion
+	 * @return booelan - True si se pudo insertar el registro; False si hubo algun fallo
+	 */
 	public static boolean insertarMovimiento(String usuario, String operacion, String descripcion) {
 		boolean correcto = false;
 		Date dt = new java.util.Date();
@@ -87,6 +113,9 @@ public class ConexionMysql {
 		return correcto;
 	}
 
+	/**
+	 * Metodo para cerrar la conexion
+	 */
 	public static void cerrarConexion() {
 		try {
 			con.close();
