@@ -25,11 +25,10 @@ public class ControladorFtp {
 	private ArrayList<String> rutas;
 	private int posicion;
 	
-	public ControladorFtp(String host, String usuario, String pass, String email) {
+	public ControladorFtp(String host, String usuario, String pass) {
 		this.host = host;
 		this.user = usuario;
 		this.pass = pass;
-		this.email = email;
 		posicion = 0;
 		rutas = new ArrayList<String>();
 		rutas.add("/");

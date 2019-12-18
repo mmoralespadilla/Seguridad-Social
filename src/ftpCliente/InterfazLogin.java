@@ -105,10 +105,9 @@ public class InterfazLogin extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				String password = textFieldContraseña.getText().toString();
 				String usuario = textFieldUsuario.getText().toString();
-				int comprobarLogin = ConexionMysql.comprobarLogin(usuario, password);
+				ControladorFtp ftp = new ControladorFtp("localhost",usuario, password);
+				int comprobarLogin = ConexionMysql.comprobarLogin(usuario, password, ftp);
 				if (comprobarLogin >= 0) {
-					String email = ConexionMysql.email;
-					ControladorFtp ftp = new ControladorFtp("localhost",usuario, password, email);
 					try {
 						if(ftp.init()) {
 							try {

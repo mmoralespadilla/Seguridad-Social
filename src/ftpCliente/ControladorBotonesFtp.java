@@ -134,7 +134,6 @@ public class ControladorBotonesFtp implements ActionListener {
 			ftp.renombrar(archivo, nomFichero);
 		//El boton pulsado es abrir correo
 		} else if (boton.equals(textos.getTituloCorreoAbrir())) {
-
 			InterfazEmail email = new InterfazEmail(ftp.getUser(), ftp.getPass());
 			email.setModal(true);
 			email.setEnabled(true);

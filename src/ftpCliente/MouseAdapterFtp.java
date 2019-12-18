@@ -8,6 +8,12 @@ import javax.swing.JLabel;
 
 import org.apache.commons.net.ftp.FTPClient;
 
+/**
+ * Clase para añadir un evento de raton a la tabla de la interfaz FTP
+ * 
+ * @author AlvaroFernandez
+ *
+ */
 public class MouseAdapterFtp implements MouseListener {
 
 	private ControladorFtp ftp;
@@ -39,11 +45,13 @@ public class MouseAdapterFtp implements MouseListener {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
+		//Comprobar que se ha pulsado doble click
 		if (e.getClickCount() == 2) {
 			ruta = (String) InterfazFtp.dtm.getValueAt(InterfazFtp.table.getSelectedRow(), 0);
 			try {
 				ruta = ftp.getRutas().get(ftp.getPosicion()) + "/" + ruta;
 				ftp.getCliente().changeWorkingDirectory(ruta);
+				//Comprobar que el directorio del usuario a cambiado
 				if (!workSpaceActual.equals(ftp.getCliente().printWorkingDirectory())) {
 					ftp.getRutas().add(ruta);
 					ftp.incrementarPosicion();

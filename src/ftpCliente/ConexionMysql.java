@@ -19,7 +19,6 @@ import javax.swing.JOptionPane;
  */
 public class ConexionMysql {
 	private static Connection con;
-	public static String email;
 	private final static String BASEDATOS = "segsoc";
 
 	/**
@@ -51,9 +50,10 @@ public class ConexionMysql {
 	 * 
 	 * @param usuario String - Nombre del usuario
 	 * @param contraseña String - Contraseña del usuario
+	 * @param ftp 
 	 * @return int - 0 Si se logeo un funcionario; 1 Si se logeo un empresario; -1 El usuario no existe; -2 La contraseña no es correcta; -3 Fallo en la conexion
 	 */
-	public static int comprobarLogin(String usuario, String contraseña) {
+	public static int comprobarLogin(String usuario, String contraseña, ControladorFtp ftp) {
 		int tipoLogin = -3;
 		if (iniciarConexion()) {
 			String query = "select * from usuarios where usuario = '" + usuario + "'";
@@ -65,7 +65,7 @@ public class ConexionMysql {
 					String contraseñaBuscada = rs.getString(2);
 					String emailBuscado = rs.getString(4);
 					if (contraseñaBuscada.equals(contraseña)) {
-						email = emailBuscado;
+						ftp.setEmail(emailBuscado);
 						tipoLogin = rs.getInt(5);
 					} else {
 						tipoLogin = -2;
