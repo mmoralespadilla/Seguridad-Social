@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -42,6 +43,7 @@ public class InterfazEmail extends JDialog {
 	private static JTable table;
 	private static ModeloTextoInterfaz modeloTexto;
 	private static CreadorInterfaz creacion;
+	private HiloRecargaEmail hiloRecarga;
 
 	/**
 	 * Launch the application.
@@ -63,6 +65,14 @@ public class InterfazEmail extends JDialog {
 	 * Create the frame.
 	 */
 	public InterfazEmail(String user, String pass) {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				hiloRecarga.stop();
+			}
+		});
+		hiloRecarga = new HiloRecargaEmail();
+		hiloRecarga.start();
 		this.user = user;
 		this.pass = pass;
 		modeloTexto = new ModeloTextoInterfaz();
