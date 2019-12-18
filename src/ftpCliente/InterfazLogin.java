@@ -29,7 +29,7 @@ public class InterfazLogin extends JDialog {
 	private BufferedImage image;
 	private JPanel contentPane;
 	private JTextField textFieldUsuario;
-	private JTextField textFieldContraseña;
+	private JTextField textFieldContrasena;
 	private JPanel panelLogin;
 	private JPanel panelImagen;
 	private String rutaImagen;
@@ -90,20 +90,20 @@ public class InterfazLogin extends JDialog {
 		panelLogin.add(textFieldUsuario);
 		textFieldUsuario.setColumns(10);
 
-		JLabel lblContrasea = new JLabel(modeloTexto.getTituloContrasena());
-		lblContrasea.setBounds(31, 80, 80, 16);
-		lblContrasea.setFont(fuenteTitulo);
-		panelLogin.add(lblContrasea);
+		JLabel lblContrasena = new JLabel(modeloTexto.getTituloContrasena());
+		lblContrasena.setBounds(31, 80, 80, 16);
+		lblContrasena.setFont(fuenteTitulo);
+		panelLogin.add(lblContrasena);
 
-		textFieldContraseña = new JTextField();
-		textFieldContraseña.setColumns(10);
-		textFieldContraseña.setBounds(134, 75, 231, 25);
-		panelLogin.add(textFieldContraseña);
+		textFieldContrasena = new JTextField();
+		textFieldContrasena.setColumns(10);
+		textFieldContrasena.setBounds(134, 75, 231, 25);
+		panelLogin.add(textFieldContrasena);
 
 		JButton btnLogin = new JButton(modeloTexto.getTituloLogin());
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String password = textFieldContraseña.getText().toString();
+				String password = textFieldContrasena.getText().toString();
 				String usuario = textFieldUsuario.getText().toString();
 				ControladorFtp ftp = new ControladorFtp("localhost",usuario, password);
 				int comprobarLogin = ConexionMysql.comprobarLogin(usuario, password, ftp);

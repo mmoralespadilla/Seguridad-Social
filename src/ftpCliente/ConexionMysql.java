@@ -22,6 +22,7 @@ public class ConexionMysql {
 
 	/**
 	 * Metodo para iniciar la conexion con la base de datos
+	 * 
 	 * @return boolean - True si la conexion es valida; False si no
 	 */
 	public static boolean iniciarConexion() {
@@ -47,12 +48,21 @@ public class ConexionMysql {
 	/**
 	 * Metodo para comprobar el login de un usuario con la base de datos
 	 * 
-	 * @param usuario String - Nombre del usuario
+	 * @param usuario    String - Nombre del usuario <<<<<<< HEAD
 	 * @param contrase�a String - Contrase�a del usuario
-	 * @param ftp 
-	 * @return int - 0 Si se logeo un funcionario; 1 Si se logeo un empresario; -1 El usuario no existe; -2 La contraseña no es correcta; -3 Fallo en la conexion
+	 * @param ftp
+	 * @return int - 0 Si se logeo un funcionario; 1 Si se logeo un empresario; -1
+	 *         El usuario no existe; -2 La contraseña no es correcta; -3 Fallo en la
+	 *         conexion =======
+	 * @param contrase�a String - Contrase�a del usuario
+	 * @param ftp        ControladorFtp - Controlador con los metodos y datos del
+	 *                   ftp
+	 * @return int - 0 Si se logeo un funcionario; 1 Si se logeo un empresario; -1
+	 *         El usuario no existe; -2 La contrase�a no es correcta; -3 Fallo en la
+	 *         conexion
 	 */
-	public static int comprobarLogin(String usuario, String contraseña, ControladorFtp ftp) {
+
+	public static int comprobarLogin(String usuario, String contrasenia, ControladorFtp ftp) {
 		int tipoLogin = -3;
 		if (iniciarConexion()) {
 			String query = "select * from usuarios where usuario = '" + usuario + "'";
@@ -61,9 +71,10 @@ public class ConexionMysql {
 				ResultSet rs = st.executeQuery(query);
 				if (rs.next()) {
 					String usuarioBuscado = rs.getString(1);
-					String contraseñaBuscada = rs.getString(2);
+
+					String contraseniaBuscada = rs.getString(2);
 					String emailBuscado = rs.getString(4);
-					if (contraseñaBuscada.equals(contraseña)) {
+					if (contraseniaBuscada.equals(contrasenia)) {
 						ftp.setEmail(emailBuscado);
 						tipoLogin = rs.getInt(5);
 					} else {
@@ -82,12 +93,14 @@ public class ConexionMysql {
 	}
 
 	/**
-	 * Metodo para insertar en la tabla movimientos cada accion que se realice en el servidor ftp
+	 * Metodo para insertar en la tabla movimientos cada accion que se realice en el
+	 * servidor ftp
 	 * 
-	 * @param usuario String - Nombre del usuario
-	 * @param operacion String - Nombre de la operacion
+	 * @param usuario     String - Nombre del usuario
+	 * @param operacion   String - Nombre de la operacion
 	 * @param descripcion String - Texto descriptivo de la operacion
-	 * @return booelan - True si se pudo insertar el registro; False si hubo algun fallo
+	 * @return booelan - True si se pudo insertar el registro; False si hubo algun
+	 *         fallo
 	 */
 	public static boolean insertarMovimiento(String usuario, String operacion, String descripcion) {
 		boolean correcto = false;
