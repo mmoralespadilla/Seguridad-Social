@@ -54,7 +54,6 @@ public class MenuCorreo {
 			System.err.println(e.getMessage());
 		} catch (MessagingException e) {
 			System.err.println(e.getMessage());
-			e.printStackTrace();
 		}
 	}
 	
@@ -62,22 +61,23 @@ public class MenuCorreo {
 		Message[] mensajes = null;
 		try {
 			mensajes = folder.getMessages();
-			for (Message mensaje : mensajes)
+			/*for (Message mensaje : mensajes)
 				mensaje.setFlag(Flags.Flag.DELETED, false);
-			mensajes = folder.getMessages();
+			mensajes = folder.getMessages();*/
 			for (int i = 0; i < mensajes.length; i++) {
+				
 				remitentes.add(mensajes[i].getFrom()[0].toString());
 				asuntos.add(mensajes[i].getSubject());
 			}
 		} catch (MessagingException e) {
 			System.err.println(e.getMessage());
 		}
-		for(String remitente : remitentes)
+		/*for(String remitente : remitentes)
 			System.out.println(remitente);
 		int contador = 1;
 		for(String asunto : asuntos) {
 			System.out.println(contador++ + ": " + asunto);
-		}
+		}*/
 		return mensajes;
 	}
 	

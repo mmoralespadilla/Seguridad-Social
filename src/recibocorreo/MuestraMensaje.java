@@ -37,21 +37,20 @@ public class MuestraMensaje {
 				// Extraemos cada una de las partes.
 				for (int j = 0; j < multi.getCount(); j++) {
 					BodyPart bodyPart = multi.getBodyPart(j);
-					if (bodyPart.isMimeType("text/*")) {
+					if (bodyPart.isMimeType("text/html")) {
 						txtMensaje.append(bodyPart.getContent().toString());
-						System.out.println(bodyPart.getContent());
+						System.out.println(bodyPart.toString());
 					} else if (bodyPart.getDisposition() != null && bodyPart.getDisposition().equals(BodyPart.ATTACHMENT)){
 						MimeBodyPart filePart = (MimeBodyPart) multi.getBodyPart(j);
-						if(!filePart.getFileName().equals("unnamed.jpg")){
+						//if(!filePart.getFileName().equals("unnamed.jpg")){
 						filePart.saveFile(
 								new File(System.getProperty("user.home") + "\\Downloads\\" + filePart.getFileName()));
-						txtMensaje.append("<p>Se ha guardado fichero en: " + System.getProperty("user.home")
-								+ "\\Downloads\\" + bodyPart.getFileName() + "</p>");
-						txtMensaje.append("\n");
-						} else {
+						txtMensaje.append("<p><em>Se ha guardado fichero en: " + System.getProperty("user.home")
+								+ "\\Downloads\\" + bodyPart.getFileName() + "</em></p>");
+						/*} else {
 							txtMensaje.append("<img src=\"https://www.vectorlogo.es/wp-content/uploads/2018/01/logo-vector-instituto-nacional-de-la-seguridad-social.jpg\"/>");
 							System.out.println(System.getProperty("user.home") + "/Downloads/SegSoc.png");
-						}
+						}*/
 					}
 				}
 				return txtMensaje.toString();

@@ -10,6 +10,7 @@ import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -37,7 +38,7 @@ public class ControladorBotonesCorreo implements ActionListener {
 			InterfazEmail.recargarTabla();
 
 		} else if (boton.equals(textos.getTituloAccionesLeer())) {
-			JFrame ventana = new JFrame();
+			JDialog ventana = new JDialog();
 			MenuCorreo folder = new MenuCorreo();
 			JEditorPane panelMensaje = new JEditorPane();
 			panelMensaje.setContentType("text/html");
@@ -49,7 +50,7 @@ public class ControladorBotonesCorreo implements ActionListener {
 			ventana.add(scrollPane);
 			ventana.pack();
 
-			ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			ventana.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			ventana.setVisible(true);
 		/*} else if (boton.equals(textos.getTituloAccionesEliminar())) {
 			try {
@@ -82,8 +83,8 @@ public class ControladorBotonesCorreo implements ActionListener {
 				}
 			}
 		} else if (boton.equals(textos.getTituloBotonEnviar())) {
-			MenuCorreo datosUsu = new MenuCorreo(InterfazEmail.getUser(), InterfazEmail.getPass());
-			enviocorreo.EnvioCorreo conecEnviar = new EnvioCorreo(datosUsu.getUser(), datosUsu.getPass(),
+			//MenuCorreo datosUsu = new MenuCorreo(InterfazEmail.getUser(), InterfazEmail.getPass());
+			enviocorreo.EnvioCorreo conecEnviar = new EnvioCorreo(InterfazEmail.getUser(), InterfazEmail.getPass(),
 					InterfazEscribirEmail.getTextFieldPara().getText(),
 					InterfazEscribirEmail.getTextFieldAsunto().getText(),
 					InterfazEscribirEmail.getAreaTexto().getText(), paths);

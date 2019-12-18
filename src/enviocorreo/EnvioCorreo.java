@@ -69,7 +69,7 @@ public class EnvioCorreo {
 
 			msg.setFrom(new InternetAddress(fromEmail, "Seguridad Social"));
 
-			msg.setReplyTo(InternetAddress.parse(toEmail, false));
+			//msg.setReplyTo(InternetAddress.parse(toEmail, false));
 
 			msg.setSubject(header, "UTF-8");
 
