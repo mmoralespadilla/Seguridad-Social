@@ -39,7 +39,7 @@ public class InterfazLogin extends JDialog {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		modeloTexto = new ModeloTextoInterfaz();
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -58,6 +58,7 @@ public class InterfazLogin extends JDialog {
 	 * @throws IOException
 	 */
 	public InterfazLogin(){
+		modeloTexto = new ModeloTextoInterfaz();
 		setTitle(modeloTexto.getTituloLogin());
 		setResizable(false);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -125,9 +126,9 @@ public class InterfazLogin extends JDialog {
 						// TODO Auto-generated catch block
 						b.printStackTrace();
 					}
-				} else if (comprobarLogin == -1){
+				} else if (comprobarLogin == -2){
 					JOptionPane.showMessageDialog(null, "NO EXISTE CONTRASEÑA");
-				} else if (comprobarLogin == -2 ) {
+				} else if (comprobarLogin == -1 ) {
 					JOptionPane.showMessageDialog(null, "NO EXISTE USUARIO");
 				}
 			}

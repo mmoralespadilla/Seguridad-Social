@@ -48,7 +48,6 @@ public class MouseAdapterFtp implements MouseListener {
 					ftp.getRutas().add(ruta);
 					InterfazFtp.posicionRuta++;
 					lblRuta.setText("Ruta: " + ruta);
-
 				}
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block

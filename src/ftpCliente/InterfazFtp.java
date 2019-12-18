@@ -74,6 +74,9 @@ public class InterfazFtp extends JFrame {
 		// File menu
 		JMenu mnArchivo = creador.crearMenu(modeloTexto.getTituloArchivo(), menuBar);
 		JMenuItem mnCambioUsuario = new JMenuItem(modeloTexto.getTituloCambiarUsuario());
+		Font fuenteTituloItem = new Font("Dialog", Font.BOLD, 13);	
+		mnCambioUsuario.setBackground(new java.awt.Color(218, 230, 228));
+		mnCambioUsuario.setFont(fuenteTitulo);	
 		mnArchivo.add(mnCambioUsuario);
 		mnCambioUsuario.addActionListener(new ActionListener() {
 			@Override
@@ -144,10 +147,8 @@ public class InterfazFtp extends JFrame {
 		MouseAdapterFtp adapterTable = new MouseAdapterFtp(ftp, lblRuta);
 		table.addMouseListener(adapterTable);
 		table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-
 		// Cabeceras de la tabla
 		dtm.addColumn(modeloTexto.getTituloCabeceraTabla());
-		//table.setDefaultRenderer(Object.class, new BorderTableCellRenderer());
 		table.setSelectionMode(0);
 
 		scrollPane.getViewport().setBackground(Color.WHITE);

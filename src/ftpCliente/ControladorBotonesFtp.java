@@ -43,14 +43,8 @@ public class ControladorBotonesFtp implements ActionListener {
 		else if(boton.equals(textos.getTituloDescargarFichero())) {
 			try {
 				JFileChooser elegir = new JFileChooser();
-				try {
-					ruta = ftp.getCliente().printWorkingDirectory();
-				} catch (IOException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
 				archivo = (String) InterfazFtp.dtm.getValueAt(InterfazFtp.table.getSelectedRow(), 0);
-				ftp.descargar(ruta, archivo, elegir);
+				ftp.descargar(archivo, elegir);
 			} catch (NullPointerException e1) {
 				System.out.println("No has seleccionado un directorio");
 			} catch (ArrayIndexOutOfBoundsException a1) {

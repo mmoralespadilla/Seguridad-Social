@@ -128,7 +128,7 @@ public class PrimerFtp {
 		fi.delete();
 	}
 	
-	public void descargar(String rutaCompleta, String nombre, JFileChooser elegir) {
+	public void descargar(String nombre, JFileChooser elegir) {
 		File fileDescargar;
 		String archivoDirDestino = "";
 		String dirDest = "";

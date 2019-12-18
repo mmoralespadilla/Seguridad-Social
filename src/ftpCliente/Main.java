@@ -5,36 +5,7 @@ import java.util.Date;
 public class Main {
 
 	public static void main(String[] args) {
-		System.out.println(new Date());
-		int login = ConexionMysql.comprobarLogin("admin@gmail.com", "123");
-		switch (login){
-		case 0:
-			System.out.println("Conectado como funcionario");
-			break;
-			
-		case 1:
-			System.out.println("Conectado como empresario");
-			break;
-			
-		case -1:
-			System.out.println("Usuario no existe");
-			break;
-			
-		case -2:
-			System.out.println("Contrase�a incorrecta");
-			break;
-		case -3:
-			System.out.println("Error de base de datos");
-			break;
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		InterfazLogin frame = new InterfazLogin();
+		frame.setVisible(true);
 	}
 }
