@@ -50,7 +50,7 @@ public class PrimerFtp {
 			if (cliente.storeFile(nombre, in)) {
 				subido = true;
 				System.out.println(archivo + nombre);
-				ConexionMysql.insertarMovimiento(user, "Subir", "Subido archivo "+nombre);
+				ConexionMysql.insertarMovimiento(user, "Subir", "Archivo " + nombre + "subido");
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -63,6 +63,7 @@ public class PrimerFtp {
 	public void crearCarpeta(String nombreCarpeta) {
 		try {
 			if (cliente.makeDirectory(nombreCarpeta)) {
+				ConexionMysql.insertarMovimiento(user, "Crear carpeta", "Carpeta "+nombreCarpeta+" creada");
 				System.out.println("Carpeta creada");
 			} else {
 				System.out.println("ERROR AL CREAR CARPETA.");
@@ -77,12 +78,14 @@ public class PrimerFtp {
 			FTPFile f = cliente.mlistFile(nombreCarpeta);
 			if (f.isDirectory()) {
 				if (cliente.removeDirectory(nombreCarpeta)) {
+					ConexionMysql.insertarMovimiento(user, "Borrar carpeta", "Carpeta " + nombreCarpeta + " borrada");
 					System.out.println("Carpeta borrada.");
 				} else {
 					System.out.println("No se pudo borrar directorio.");
 				}
 			} else if (f.isFile()) {
 				if (cliente.deleteFile(nombreCarpeta)) {
+					ConexionMysql.insertarMovimiento(user, "Borrar fichero", "Fichero " + nombreCarpeta + " borrado");
 					System.out.println("Fichero borrado.");
 				} else {
 					System.out.println("Fichero no existe.");
@@ -97,6 +100,7 @@ public class PrimerFtp {
 	public void renombrar(String nombreAntiguo, String nombreNuevo) {
 		try {
 			cliente.rename(nombreAntiguo, nombreNuevo);
+			ConexionMysql.insertarMovimiento(user, "Renombrar", "Archivo " + nombreAntiguo + " renombrado a "+nombreNuevo);
 		} catch (IOException e) {
 			System.out.println("ERROR E/S");
 			e.printStackTrace();
@@ -113,6 +117,7 @@ public class PrimerFtp {
 		}
 		try (FileInputStream FicheroNuevo = new FileInputStream(fi);){
 			cliente.storeFile(fichero, FicheroNuevo);
+			ConexionMysql.insertarMovimiento(user, "Crear fichero", "Fichero "+fichero+ " creado");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -145,6 +150,7 @@ public class PrimerFtp {
 				BufferedOutputStream salida = new BufferedOutputStream(new FileOutputStream(archivoDirDestino));
 				salida.close();
 				if (cliente.retrieveFile(nombre, salida)) {
+					System.out.println(ConexionMysql.insertarMovimiento(user, "Descargar", "Fichero "+nombre+" descargado"));
 					JOptionPane.showMessageDialog(null, nombre + "=> Se ha descargado correctamente...");
 				}
 				else {

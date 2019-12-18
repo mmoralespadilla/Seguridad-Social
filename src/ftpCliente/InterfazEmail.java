@@ -29,9 +29,10 @@ import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 
-public class InterfazEmail extends JFrame {
+public class InterfazEmail extends JDialog {
 
 	private static String user = "iamsegsoctrustme@gmail.com";
 	private static String pass = "segsoc123";
@@ -48,7 +49,7 @@ public class InterfazEmail extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InterfazEmail frame = new InterfazEmail();
+					InterfazEmail frame = new InterfazEmail(user,pass);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -60,7 +61,9 @@ public class InterfazEmail extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InterfazEmail() {
+	public InterfazEmail(String user, String pass) {
+		this.user = user;
+		this.pass = pass;
 		modeloTexto = new ModeloTextoInterfaz();
 		creacion = new CreadorInterfaz();
 		
@@ -68,7 +71,7 @@ public class InterfazEmail extends JFrame {
 		ArrayList <String> titulosMenuItemAyuda;
 		
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 855, 547);
 		Font fuenteTitulo = new Font("Dialog", Font.BOLD, 14);
 		

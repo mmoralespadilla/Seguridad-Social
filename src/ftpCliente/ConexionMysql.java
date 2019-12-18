@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -13,6 +14,7 @@ import javax.swing.JOptionPane;
 public class ConexionMysql {
 	private static Connection con;
 	public static String email;
+
 	public static boolean iniciarConexion() {
 		boolean cargada = false;
 		try {
@@ -56,15 +58,22 @@ public class ConexionMysql {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} 
+			}
 			cerrarConexion();
 		}
 		return tipoLogin;
 	}
+
 	public static boolean insertarMovimiento(String usuario, String operacion, String descripcion) {
 		boolean correcto = false;
+		Date dt = new java.util.Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String currentTime = sdf.format(dt);
+		System.out.println(currentTime);
 		if (iniciarConexion()) {
-			String query = "insert into movimientos values (default,'"+usuario+"','"+operacion+"','"+new Date()+"', '"+descripcion+"'";
+			String query = "insert into movimientos values (default, '" + usuario + "','" + operacion + "','"
+					+ currentTime + "', '" + descripcion + "')";
+			System.out.println(query);
 			try {
 				Statement st = con.createStatement();
 				st.execute(query);
@@ -72,12 +81,12 @@ public class ConexionMysql {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} 
+			}
 			cerrarConexion();
 		}
 		return correcto;
 	}
-	
+
 	public static void cerrarConexion() {
 		try {
 			con.close();

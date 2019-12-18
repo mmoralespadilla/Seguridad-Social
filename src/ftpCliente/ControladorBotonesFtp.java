@@ -91,11 +91,13 @@ public class ControladorBotonesFtp implements ActionListener {
 			}
 		else if(boton.equals(textos.getTituloCambiarNombre())) {
 			archivo = (String) InterfazFtp.dtm.getValueAt(InterfazFtp.table.getSelectedRow(), 0);
-			nomFichero = JOptionPane.showInputDialog("Nombre de la carpeta");
+			nomFichero = JOptionPane.showInputDialog("Nombre nuevo");
 			ftp.renombrar(archivo, nomFichero);
-		}else if(boton.equals(textos.getTituloCambiarUsuario())) {
+		}else if(boton.equals(textos.getTituloCorreoAbrir())) {
 			
-			
+			InterfazEmail email = new InterfazEmail(ftp.getUser(),ftp.getPass());
+			email.setModal(true);
+			email.setEnabled(true);
 		}
 		InterfazFtp.recargarTabla();
 	}
